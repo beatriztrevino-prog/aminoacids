@@ -1,0 +1,1911 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AminoMed 360 - Nomenclatura y Clasificación de Aminoácidos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Outfit', sans-serif;
+        }
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 12px 24px -10px rgba(99, 102, 241, 0.3);
+        }
+        .glow-effect {
+            box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.4);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.4);
+            border-radius: 4px;
+        }
+        @keyframes pulse-slow {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.03); opacity: 1; }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 3s infinite ease-in-out;
+        }
+        .tab-btn.active-tab {
+            background-color: #4f46e5;
+            color: #ffffff;
+            border-color: #818cf8;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+        }
+        sub, sup {
+            font-size: 0.75em;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+        }
+        sup { top: -0.4em; }
+        sub { bottom: -0.25em; }
+    </style>
+</head>
+<body class="min-h-screen custom-scrollbar flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+
+    <!-- TOP NAVIGATION & BRANDING -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="showTab('tab-estructura')">
+                <div class="bg-gradient-to-tr from-indigo-500 to-purple-500 p-2.5 rounded-xl shadow-lg shadow-indigo-500/30">
+                    <i class="fa-solid fa-dna text-white text-xl"></i>
+                </div>
+                <div>
+                    <span class="font-heading font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400">AminoMed 360</span>
+                    <span class="text-xs text-slate-400 block -mt-1 font-medium">Bioquímica Médica • Nomenclatura y Clasificación</span>
+                </div>
+            </div>
+            
+            <!-- MAIN TAB NAVIGATION -->
+            <nav class="hidden md:flex space-x-1 text-xs font-semibold">
+                <button onclick="showTab('tab-estructura')" id="nav-tab-estructura" class="tab-btn px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-atom mr-1 text-indigo-400"></i> Estructura
+                </button>
+                <button onclick="showTab('tab-clasificacion')" id="nav-tab-clasificacion" class="tab-btn px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-layer-group mr-1 text-purple-400"></i> 4 Grupos
+                </button>
+                <button onclick="showTab('tab-nutricional')" id="nav-tab-nutricional" class="tab-btn px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-apple-whole mr-1 text-emerald-400"></i> Nutricional
+                </button>
+                <button onclick="showTab('tab-nomenclatura')" id="nav-tab-nomenclatura" class="tab-btn px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition">
+                    <i class="fa-solid fa-font mr-1 text-pink-400"></i> Nomenclatura
+                </button>
+                <button onclick="showTab('tab-caso-clinico')" id="nav-tab-caso-clinico" class="tab-btn px-3 py-2 rounded-lg text-amber-400 hover:text-amber-300 hover:bg-amber-950/40 border border-amber-500/30 transition">
+                    <i class="fa-solid fa-stethoscope mr-1"></i> Caso Clínico
+                </button>
+                <button onclick="showTab('tab-estudio-feynman')" id="nav-tab-estudio-feynman" class="tab-btn px-3 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white transition shadow-sm">
+                    <i class="fa-solid fa-lightbulb mr-1"></i> Método Feynman
+                </button>
+            </nav>
+        </div>
+
+        <!-- MOBILE TAB BAR -->
+        <div class="flex md:hidden overflow-x-auto px-2 py-2 border-t border-slate-800 space-x-2 text-xs custom-scrollbar">
+            <button onclick="showTab('tab-estructura')" id="mob-tab-estructura" class="tab-btn shrink-0 px-3 py-1.5 rounded-lg text-slate-300 bg-slate-800">Estructura</button>
+            <button onclick="showTab('tab-clasificacion')" id="mob-tab-clasificacion" class="tab-btn shrink-0 px-3 py-1.5 rounded-lg text-slate-300 bg-slate-800">4 Grupos</button>
+            <button onclick="showTab('tab-nutricional')" id="mob-tab-nutricional" class="tab-btn shrink-0 px-3 py-1.5 rounded-lg text-slate-300 bg-slate-800">Nutricional</button>
+            <button onclick="showTab('tab-nomenclatura')" id="mob-tab-nomenclatura" class="tab-btn shrink-0 px-3 py-1.5 rounded-lg text-slate-300 bg-slate-800">Nomenclatura</button>
+            <button onclick="showTab('tab-caso-clinico')" id="mob-tab-caso-clinico" class="tab-btn shrink-0 px-3 py-1.5 rounded-lg text-amber-400 bg-amber-950/40">Caso Clínico</button>
+            <button onclick="showTab('tab-estudio-feynman')" id="mob-tab-estudio-feynman" class="tab-btn shrink-0 px-3 py-1.5 rounded-lg text-indigo-300 bg-indigo-900/60">Feynman</button>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 flex-1 w-full">
+
+        <!-- HERO / INTRODUCTORY BANNER -->
+        <section id="hero-banner" class="relative rounded-3xl overflow-hidden glass-panel p-6 sm:p-8 border border-indigo-500/20 glow-effect">
+            <div class="absolute -right-20 -top-20 w-80 h-80 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-20 -bottom-20 w-80 h-80 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                <div class="lg:col-span-8 space-y-3">
+                    <div class="inline-flex items-center space-x-2 bg-indigo-500/10 border border-indigo-500/30 px-3 py-1 rounded-full text-indigo-300 text-xs font-semibold">
+                        <i class="fa-solid fa-bolt text-amber-400"></i>
+                        <span>Aprendizaje Acelerado Basado en Neurociencias</span>
+                    </div>
+                    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-tight font-heading">
+                        Plataforma Interactiva de <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400">Aminoácidos y Moléculas Efectoras</span>
+                    </h1>
+                    <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                        Diseñado especialmente para estudiantes de medicina. Esta plataforma utiliza <strong>codificación dual, agrupamiento (chunking), mnemotecnias visuales y la Técnica Feynman</strong> para afianzar la estructura, clasificación y funciones clave sin memorización pasiva.
+                    </p>
+                </div>
+
+                <div class="lg:col-span-4 flex justify-center">
+                    <div class="glass-card p-4 rounded-2xl border border-indigo-500/30 text-center max-w-sm w-full space-y-2">
+                        <div class="text-indigo-400 text-2xl">
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                        <h3 class="font-bold text-white font-heading text-sm">Principio Neuro-Pedagógico</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            "El cerebro médico retiene un 85% más de información bioquímica cuando asocia la estructura molecular con un patrón de color, una mnemotecnia absurda y su consecuencia en el paciente."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB CONTENT CONTAINER -->
+        <div id="tab-content-container" class="space-y-8">
+
+            <!-- SECTION 1: ESTRUCTURA BASE DE UN AMINOÁCIDO -->
+            <section id="tab-estructura" class="tab-pane space-y-6">
+                <div class="border-l-4 border-indigo-500 pl-4">
+                    <h2 class="text-2xl sm:text-3xl font-bold font-heading text-white">1. Anatomía Química de un Aminoácido</h2>
+                    <p class="text-slate-400 text-sm">Todos los aminoácidos proteicos (excepto la prolina) comparten una "esquina común" de 4 componentes unidos al Carbono Alfa (α).</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                    <!-- Interactive SVG visualizer -->
+                    <div class="lg:col-span-7 glass-card p-6 rounded-2xl flex flex-col justify-between relative overflow-hidden">
+                        <h3 class="font-bold text-slate-200 text-base mb-4 flex items-center justify-between">
+                            <span>Pasa el cursor / Toca cada región para analizarla</span>
+                            <span class="text-xs text-indigo-400 font-normal bg-indigo-950/60 px-2.5 py-1 rounded-md border border-indigo-800/50">pH Fisiológico (~7.4)</span>
+                        </h3>
+
+                        <!-- Interactive Diagram -->
+                        <div class="relative py-8 flex justify-center items-center">
+                            <svg class="w-full max-w-md h-auto" viewBox="0 0 500 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Connections / Bonds -->
+                                <line x1="250" y1="175" x2="130" y2="175" stroke="#94a3b8" stroke-width="6" stroke-linecap="round"/>
+                                <line x1="250" y1="175" x2="370" y2="175" stroke="#94a3b8" stroke-width="6" stroke-linecap="round"/>
+                                <line x1="250" y1="175" x2="250" y2="65" stroke="#94a3b8" stroke-width="6" stroke-linecap="round"/>
+                                <line x1="250" y1="175" x2="250" y2="285" stroke="#a855f7" stroke-width="8" stroke-dasharray="6 6" stroke-linecap="round"/>
+
+                                <!-- Central Alpha Carbon -->
+                                <g class="cursor-pointer group" onclick="highlightPart('calpha')">
+                                    <circle cx="250" cy="175" r="38" fill="#3b82f6" class="transition-transform group-hover:scale-110 shadow-lg"/>
+                                    <text x="250" y="170" fill="white" font-size="16" font-weight="bold" text-anchor="middle">Carbono</text>
+                                    <text x="250" y="190" fill="#bfdbfe" font-size="14" font-weight="bold" text-anchor="middle">Alfa (Cα)</text>
+                                </g>
+
+                                <!-- Amino Group (Left) -->
+                                <g class="cursor-pointer group" onclick="highlightPart('amino')">
+                                    <rect x="50" y="135" width="100" height="80" rx="16" fill="#10b981" class="transition-transform group-hover:scale-105"/>
+                                    <text x="100" y="170" fill="white" font-size="18" font-weight="extrabold" text-anchor="middle">NH₃⁺</text>
+                                    <text x="100" y="195" fill="#a7f3d0" font-size="11" font-weight="bold" text-anchor="middle">Grupo Amino</text>
+                                </g>
+
+                                <!-- Carboxyl Group (Right) -->
+                                <g class="cursor-pointer group" onclick="highlightPart('carboxilo')">
+                                    <rect x="350" y="135" width="100" height="80" rx="16" fill="#ef4444" class="transition-transform group-hover:scale-105"/>
+                                    <text x="400" y="170" fill="white" font-size="18" font-weight="extrabold" text-anchor="middle">COO⁻</text>
+                                    <text x="400" y="195" fill="#fca5a5" font-size="11" font-weight="bold" text-anchor="middle">Grupo Carboxilo</text>
+                                </g>
+
+                                <!-- Hydrogen Atom (Top) -->
+                                <g class="cursor-pointer group" onclick="highlightPart('hidrogeno')">
+                                    <circle cx="250" cy="55" r="30" fill="#64748b" class="transition-transform group-hover:scale-105"/>
+                                    <text x="250" y="61" fill="white" font-size="18" font-weight="bold" text-anchor="middle">H</text>
+                                </g>
+
+                                <!-- Variable R Group (Bottom) -->
+                                <g class="cursor-pointer group" onclick="highlightPart('cadenaR')">
+                                    <rect x="180" y="255" width="140" height="70" rx="18" fill="#a855f7" class="transition-transform group-hover:scale-105 animate-pulse-slow"/>
+                                    <text x="250" y="288" fill="white" font-size="22" font-weight="extrabold" text-anchor="middle">Grupo R</text>
+                                    <text x="250" y="310" fill="#f0abfc" font-size="10" font-weight="bold" text-anchor="middle">(Cadena Lateral Variada)</text>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <div class="text-center text-xs text-slate-400 italic">
+                            *Haz clic en cualquiera de las cajas para ver su rol funcional médico
+                        </div>
+                    </div>
+
+                    <!-- Explanation Box & Meme Analogy -->
+                    <div class="lg:col-span-5 space-y-4 flex flex-col justify-between">
+                        <div id="part-info-box" class="glass-card p-6 rounded-2xl border-l-4 border-indigo-500 min-h-[160px] flex flex-col justify-center">
+                            <h4 id="part-title" class="font-bold text-indigo-300 text-lg mb-1 font-heading">Selecciona una parte de la molécula</h4>
+                            <p id="part-desc" class="text-slate-300 text-sm leading-relaxed">
+                                Haz clic en los nodos de la izquierda. Descubrirás por qué la variabilidad del <strong>Grupo R</strong> determina si una proteína flota en el agua citoplasmática o se incrusta en la membrana lipídica de una célula.
+                            </p>
+                        </div>
+
+                        <!-- MEME / VISUAL ANALOGY CARD -->
+                        <div class="glass-card p-5 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-purple-950 border border-purple-500/30 relative overflow-hidden">
+                            <div class="flex items-start space-x-4">
+                                <div class="text-4xl">🎭</div>
+                                <div class="space-y-1">
+                                    <span class="text-[10px] font-bold tracking-wider uppercase text-purple-400 bg-purple-950 px-2 py-0.5 rounded border border-purple-800">Mnemotecnia Visual</span>
+                                    <h4 class="font-bold text-white text-sm">Analogía del "Uniformes vs. Identidad"</h4>
+                                    <p class="text-xs text-slate-300 leading-relaxed">
+                                        Imagina a 20 médicos en el hospital: Todos llevan la misma bata blanca, estetoscopio e identificación (<strong class="text-emerald-300">Amino</strong>, <strong class="text-rose-300">Carboxilo</strong> y <strong class="text-blue-300">Cα-H</strong>). Lo único que distingue al cirujano del pediatra es su <strong class="text-purple-300">Grupo R</strong>.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BIBLIOGRAFÍA TAB 1 -->
+                <div class="mt-8 pt-4 border-t border-slate-800 text-xs text-slate-400 space-y-2">
+                    <h4 class="font-bold text-slate-300 flex items-center gap-2 font-heading">
+                        <i class="fa-solid fa-book-bookmark text-indigo-400"></i> Referencias Bibliográficas (APA)
+                    </h4>
+                    <ul class="list-disc list-inside space-y-1 text-[11px] text-slate-400 pl-1">
+                        <li>Baynes, J.W., & Dominiczak, M.H. (2024). <i>Bioquímica médica (6.ª ed.)</i> Elevier.</li>
+			<li>McKee, T. & McKee, J.R. (2020). <i> Bioquímica. Las bases moleculares de la vida (7.ª ed.)</i> McGraw-Hill Education.</li> 
+			<li>Horton, H.R., Moran, L.A., Scrimgeour, K. G., Perry, M. D., & Rawn, J. D. (2008). <i>Principios de bioquímica (4.ª ed.)</i> Pearson Educación </li>
+			<li>Ferrier, D. R. (2017). <i>Lippincott Illustrated Reviews: Bioquímica</i> (7.ª ed.)</i> Wolters Kluwer.</li>                       
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECTION 2: LA CLASIFICACIÓN EN 4 GRUPOS -->
+            <section id="tab-clasificacion" class="tab-pane hidden space-y-6">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-l-4 border-purple-500 pl-4">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-bold font-heading text-white">2. Clasificación Fisiológica en 4 Grupos</h2>
+                        <p class="text-slate-400 text-sm">Los 20 aminoácidos se organizan según las propiedades químicas de su grupo R a pH fisiológico (~7.4), incluyendo sus funciones como moléculas efectoras.</p>
+                    </div>
+
+                    <!-- Group Selector Sub-Tabs -->
+                    <div class="flex flex-wrap gap-2 bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800 text-xs">
+                        <button onclick="switchGroup('no-polares')" id="subtab-no-polares" class="group-tab active px-3 py-2 rounded-xl font-semibold transition bg-indigo-600 text-white shadow">
+                            1. No Polares (9)
+                        </button>
+                        <button onclick="switchGroup('polares-neutros')" id="subtab-polares-neutros" class="group-tab px-3 py-2 rounded-xl font-semibold transition text-slate-400 hover:text-white">
+                            2. Polares Neutros (6)
+                        </button>
+                        <button onclick="switchGroup('acidos')" id="subtab-acidos" class="group-tab px-3 py-2 rounded-xl font-semibold transition text-slate-400 hover:text-white">
+                            3. Ácidos (-) (2)
+                        </button>
+                        <button onclick="switchGroup('basicos')" id="subtab-basicos" class="group-tab px-3 py-2 rounded-xl font-semibold transition text-slate-400 hover:text-white">
+                            4. Básicos (+) (3)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- GROUP 1: NO POLARES -->
+                <div id="group-no-polares" class="group-content space-y-4">
+                    <div class="glass-panel p-4 rounded-2xl border-l-4 border-amber-500 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h3 class="font-bold text-amber-300 text-lg font-heading">Grupo 1: No Polares / Hidrofóbicos (Alifáticos y Aromáticos)</h3>
+                            <p class="text-xs text-slate-300">Cadenas hidrocarbonadas sin carga ni polos. Odian el agua citoplasmática y tienden a esconderse en el núcleo hidrofóbico de las proteínas o membranas.</p>
+                        </div>
+                        <div class="bg-amber-950/60 border border-amber-500/40 px-3 py-2 rounded-xl text-xs text-amber-200 flex items-center space-x-2 shrink-0">
+                            <span>🐱 MEME MEMORIA:</span>
+                            <span class="font-semibold">"Huyen del agua como un gato al baño"</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Glycine -->
+                        <div class="glass-card p-4 rounded-xl border border-slate-700/60 relative group">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold text-white text-base">Glicina</h4>
+                                    <span class="text-xs text-slate-400">Alifático simple</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-amber-400 bg-amber-950/80 border border-amber-800 px-2 py-0.5 rounded-md">GLY</span>
+                                    <span class="text-sm font-black text-indigo-300 block">G</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mb-3"><strong class="text-amber-300">Grupo R:</strong> Solo un átomo de Hidrógeno (-H). Es el más pequeño y el único aquiral.</p>
+                            <div class="text-[11px] bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 text-slate-300 space-y-1">
+                                <div>💡 <strong class="text-indigo-300">Tip Médico:</strong> Ocupa espacios diminutos en el colágeno. Permite giros apretados.</div>
+                                <div class="text-emerald-300 font-medium">⚡ <strong class="text-emerald-400">Molécula efectora:</strong> Neurotransmisor inhibidor; precursor del hemo.</div>
+                            </div>
+                        </div>
+
+                        <!-- Alanine -->
+                        <div class="glass-card p-4 rounded-xl border border-slate-700/60 relative group">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold text-white text-base">Alanina</h4>
+                                    <span class="text-xs text-slate-400">Alifático simple</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-amber-400 bg-amber-950/80 border border-amber-800 px-2 py-0.5 rounded-md">ALA</span>
+                                    <span class="text-sm font-black text-indigo-300 block">A</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mb-3"><strong class="text-amber-300">Grupo R:</strong> Grupo metilo (-CH<sub>3</sub>).</p>
+                            <div class="text-[11px] bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 text-slate-300">
+                                💡 <strong class="text-indigo-300">Tip Médico:</strong> Transporta nitrógeno desde el músculo al hígado (Ciclo de Alanina).
+                            </div>
+                        </div>
+
+                        <!-- Valine -->
+                        <div class="glass-card p-4 rounded-xl border border-slate-700/60 relative group border-amber-500/40">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold text-amber-200 text-base flex items-center gap-1.5">
+                                        Valina 
+                                        <i class="fa-solid fa-triangle-exclamation text-amber-400 text-xs" title="Implica en Anemia Falciforme"></i>
+                                    </h4>
+                                    <span class="text-xs text-slate-400">Ramificado (BCAA)</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-amber-400 bg-amber-950/80 border border-amber-800 px-2 py-0.5 rounded-md">VAL</span>
+                                    <span class="text-sm font-black text-indigo-300 block">V</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mb-3"><strong class="text-amber-300">Grupo R:</strong> Cadena en "V" de 3 carbonos (-CH(CH<sub>3</sub>)<sub>2</sub>).</p>
+                            <div class="text-[11px] bg-amber-950/40 p-2.5 rounded-lg border border-amber-800/50 text-amber-200">
+                                🚨 <strong class="text-amber-300">¡Alerta Clínica!</strong> Sustituye al Glutamato en la Hemoglobina S (Anemia falciforme).
+                            </div>
+                        </div>
+
+                        <!-- Leucine -->
+                        <div class="glass-card p-4 rounded-xl border border-slate-700/60 relative group">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold text-white text-base">Leucina</h4>
+                                    <span class="text-xs text-slate-400">Ramificado (BCAA)</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-amber-400 bg-amber-950/80 border border-amber-800 px-2 py-0.5 rounded-md">LEU</span>
+                                    <span class="text-sm font-black text-indigo-300 block">L</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mb-3"><strong class="text-amber-300">Grupo R:</strong> Isobutilo (-CH<sub>2</sub>-CH(CH<sub>3</sub>)<sub>2</sub>).</p>
+                            <div class="text-[11px] bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 text-slate-300">
+                                💡 <strong class="text-indigo-300">Tip Médico:</strong> Potente estimulador de la síntesis proteica muscular vía mTOR.
+                            </div>
+                        </div>
+
+                        <!-- Isoleucine -->
+                        <div class="glass-card p-4 rounded-xl border border-slate-700/60 relative group">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold text-white text-base">Isoleucina</h4>
+                                    <span class="text-xs text-slate-400">Ramificado (Isómero de Leu)</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-amber-400 bg-amber-950/80 border border-amber-800 px-2 py-0.5 rounded-md">ILE</span>
+                                    <span class="text-sm font-black text-indigo-300 block">I</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mb-3"><strong class="text-amber-300">Grupo R:</strong> Sec-butilo. Posee 2 centros quirales.</p>
+                            <div class="text-[11px] bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 text-slate-300">
+                                💡 <strong class="text-indigo-300">Clave:</strong> Junto con Val y Leu forma el trío de aminoácidos ramificados esenciales.
+                            </div>
+                        </div>
+
+                        <!-- Methionine -->
+                        <div class="glass-card p-4 rounded-xl border border-slate-700/60 relative group">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold text-white text-base">Metionina</h4>
+                                    <span class="text-xs text-slate-400">Contiene Azufre (Tioéter)</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-amber-400 bg-amber-950/80 border border-amber-800 px-2 py-0.5 rounded-md">MET</span>
+                                    <span class="text-sm font-black text-indigo-300 block">M</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mb-3"><strong class="text-amber-300">Grupo R:</strong> Contiene un átomo de S no polar (-CH<sub>2</sub>-CH<sub>2</sub>-S-CH<sub>3</sub>).</p>
+                            <div class="text-[11px] bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 text-slate-300">
+                                💡 <strong class="text-indigo-300">Iniciador:</strong> Codón AUG. Es el primer aminoácido traducido en casi toda proteína eucariota.
+                            </div>
+                        </div>
+
+                        <!-- Proline -->
+                        <div class="glass-card p-4 rounded-xl border border-slate-700/60 relative group">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold text-white text-base">Prolina</h4>
+                                    <span class="text-xs text-slate-400">Iminoácido Cíclico</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-amber-400 bg-amber-950/80 border border-amber-800 px-2 py-0.5 rounded-md">PRO</span>
+                                    <span class="text-sm font-black text-indigo-300 block">P</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mb-3"><strong class="text-amber-300">Grupo R:</strong> La cadena lateral se cicla de nuevo al grupo amino (Anillo de pirrolidina).</p>
+                            <div class="text-[11px] bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 text-slate-300">
+                                💡 <strong class="text-indigo-300">Efecto Rigidez:</strong> Introduce quiebres rígidos en la cadena polipeptídica.
+                            </div>
+                        </div>
+
+                        <!-- Phenylalanine -->
+                        <div class="glass-card p-4 rounded-xl border border-slate-700/60 relative group">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold text-white text-base">Fenilalanina</h4>
+                                    <span class="text-xs text-slate-400">Aromático</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-amber-400 bg-amber-950/80 border border-amber-800 px-2 py-0.5 rounded-md">PHE</span>
+                                    <span class="text-sm font-black text-indigo-300 block">F</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mb-3"><strong class="text-amber-300">Grupo R:</strong> Anillo bencénico unido a un grupo metileno.</p>
+                            <div class="text-[11px] bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 text-slate-300">
+                                💡 <strong class="text-indigo-300">Clínica (PKU):</strong> La falta de su enzima hidroxilasa causa Fenilcetonuria.
+                            </div>
+                        </div>
+
+                        <!-- Tryptophan -->
+                        <div class="glass-card p-4 rounded-xl border border-slate-700/60 relative group">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold text-white text-base">Triptófano</h4>
+                                    <span class="text-xs text-slate-400">Aromático Voluminoso</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-amber-400 bg-amber-950/80 border border-amber-800 px-2 py-0.5 rounded-md">TRP</span>
+                                    <span class="text-sm font-black text-indigo-300 block">W</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mb-3"><strong class="text-amber-300">Grupo R:</strong> Anillo de Indol bicíclico. Muy voluminoso.</p>
+                            <div class="text-[11px] bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 text-slate-300 space-y-1">
+                                <div>💡 <strong class="text-indigo-300">Neurotransmisor:</strong> Precursor directo de la Serotonina y Melatonina.</div>
+                                <div class="text-emerald-300 font-medium">⚡ <strong class="text-emerald-400">Molécula efectora:</strong> Precursor de la serotonina y melatonina.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GROUP 2: POLARES NEUTROS -->
+                <div id="group-polares-neutros" class="group-content space-y-4 hidden">
+                    <div class="glass-panel p-4 rounded-2xl border-l-4 border-cyan-500 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h3 class="font-bold text-cyan-300 text-lg font-heading">Grupo 2: Polares Sin Carga (Hidrofílicos Neutros)</h3>
+                            <p class="text-xs text-slate-300">Poseen grupos electronegativos (-OH, -SH, -NH<sub>2</sub>) que forman enlaces de hidrógeno con el agua, pero no están cargados eléctricamente a pH 7.4.</p>
+                        </div>
+                        <div class="bg-cyan-950/60 border border-cyan-500/40 px-3 py-2 rounded-xl text-xs text-cyan-200 flex items-center space-x-2 shrink-0">
+                            <span>🤝 MEME MEMORIA:</span>
+                            <span class="font-semibold">"Amigos del agua sin cobrar peaje eléctrico"</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Serine -->
+                        <div class="glass-card p-4 rounded-xl border border-slate-700/60">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold text-white text-base">Serina</h4>
+                                    <span class="text-xs text-slate-400">Hidroxilado</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-cyan-400 bg-cyan-950/80 border border-cyan-800 px-2 py-0.5 rounded-md">SER</span>
+                                    <span class="text-sm font-black text-indigo-300 block">S</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mb-3"><strong class="text-cyan-300">Grupo R:</strong> Contiene un grupo alcohol primario (-CH<sub>2</sub>-OH).</p>
+                            <div class="text-[11px] bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 text-slate-300">
+                                💡 <strong class="text-indigo-300">Modificación:</strong> Sitio común de fosforilación enzimática para activar/desactivar proteínas.
+                            </div>
+                        </div>
+
+                        <!-- Threonine -->
+                        <div class="glass-card p-4 rounded-xl border border-slate-700/60">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold text-white text-base">Treonina</h4>
+                                    <span class="text-xs text-slate-400">Hidroxilado Secundario</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-cyan-400 bg-cyan-950/80 border border-cyan-800 px-2 py-0.5 rounded-md">THR</span>
+                                    <span class="text-sm font-black text-indigo-300 block">T</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mb-3"><strong class="text-cyan-300">Grupo R:</strong> Alcohol secundario (-CH(OH)-CH<sub>3</sub>). Esencial.</p>
+                            <div class="text-[11px] bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 text-slate-300">
+                                💡 <strong class="text-indigo-300">Estructura:</strong> También sufre O-glicosilación en el aparato de Golgi.
+                            </div>
+                        </div>
+
+                        <!-- Cysteine -->
+                        <div class="glass-card p-4 rounded-xl border border-slate-700/60 border-cyan-500/40">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold text-cyan-200 text-base">Cisteína</h4>
+                                    <span class="text-xs text-slate-400">Tiol / Sulfhidrilo</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-cyan-400 bg-cyan-950/80 border border-cyan-800 px-2 py-0.5 rounded-md">CYS</span>
+                                    <span class="text-sm font-black text-indigo-300 block">C</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mb-3"><strong class="text-cyan-300">Grupo R:</strong> Grupo sulfhidrilo (-CH<sub>2</sub>-SH).</p>
+                            <div class="text-[11px] bg-cyan-950/40 p-2.5 rounded-lg border border-cyan-800/50 text-cyan-200">
+                                🔒 <strong class="text-cyan-300">Puentes Disulfuro:</strong> Dos Cisteínas se oxidan para formar una Cistina, estabilizando la insulina.
+                            </div>
+                        </div>
+
+                        <!-- Asparagine -->
+                        <div class="glass-card p-4 rounded-xl border border-slate-700/60">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold text-white text-base">Asparagina</h4>
+                                    <span class="text-xs text-slate-400">Amida derivada de Asp</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-cyan-400 bg-cyan-950/80 border border-cyan-800 px-2 py-0.5 rounded-md">ASN</span>
+                                    <span class="text-sm font-black text-indigo-300 block">N</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mb-3"><strong class="text-cyan-300">Grupo R:</strong> Grupo carboxamida (-CH<sub>2</sub>-CO-NH<sub>2</sub>).</p>
+                            <div class="text-[11px] bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 text-slate-300">
+                                💡 <strong class="text-indigo-300">Glicosilación:</strong> Sitio principal de N-glicosilación en el retículo endoplásmico.
+                            </div>
+                        </div>
+
+                        <!-- Glutamine -->
+                        <div class="glass-card p-4 rounded-xl border border-slate-700/60">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold text-white text-base">Glutamina</h4>
+                                    <span class="text-xs text-slate-400">Amida derivada de Glu</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-cyan-400 bg-cyan-950/80 border border-cyan-800 px-2 py-0.5 rounded-md">GLN</span>
+                                    <span class="text-sm font-black text-indigo-300 block">Q</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mb-3"><strong class="text-cyan-300">Grupo R:</strong> Carboxamida extendida (-CH<sub>2</sub>-CH<sub>2</sub>-CO-NH<sub>2</sub>).</p>
+                            <div class="text-[11px] bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 text-slate-300">
+                                💡 <strong class="text-indigo-300">Transportador:</strong> Transporta amoniaco no tóxico en la sangre hacia los riñones.
+                            </div>
+                        </div>
+
+                        <!-- Tyrosine -->
+                        <div class="glass-card p-4 rounded-xl border border-slate-700/60">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold text-white text-base">Tirosina</h4>
+                                    <span class="text-xs text-slate-400">Aromático Fenólico</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-cyan-400 bg-cyan-950/80 border border-cyan-800 px-2 py-0.5 rounded-md">TYR</span>
+                                    <span class="text-sm font-black text-indigo-300 block">Y</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mb-3"><strong class="text-cyan-300">Grupo R:</strong> Anillo fenol polar (-C<sub>6</sub>H<sub>4</sub>-OH).</p>
+                            <div class="text-[11px] bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 text-slate-300 space-y-1">
+                                <div>💡 <strong class="text-indigo-300">Hormonas:</strong> Precursor de Dopamina, Noradrenalina, Adrenalina y hormonas tiroideas.</div>
+                                <div class="text-emerald-300 font-medium">⚡ <strong class="text-emerald-400">Molécula efectora:</strong> Precursor de catecolaminas (dopamina, adrenalina y noradrenalina) y tiroxina.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GROUP 3: ÁCIDOS -->
+                <div id="group-acidos" class="group-content space-y-4 hidden">
+                    <div class="glass-panel p-4 rounded-2xl border-l-4 border-rose-500 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h3 class="font-bold text-rose-300 text-lg font-heading">Grupo 3: Ácidos / Carga Negativa (Aniónicos a pH 7.4)</h3>
+                            <p class="text-xs text-slate-300">Donan su protón del grupo carboxilo lateral a pH neutro, quedando con una carga neta negativa (-1).</p>
+                        </div>
+                        <div class="bg-rose-950/60 border border-rose-500/40 px-3 py-2 rounded-xl text-xs text-rose-200 flex items-center space-x-2 shrink-0">
+                            <span>⚡ MEME MEMORIA:</span>
+                            <span class="font-semibold">"Donaron un protón y quedaron en estado negativo (-)"</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Aspartate -->
+                        <div class="glass-card p-5 rounded-xl border border-rose-500/30">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold text-white text-base">Aspartato (Ácido Aspártico)</h4>
+                                    <span class="text-xs text-slate-400">Dicarboxílico corto</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-rose-400 bg-rose-950/80 border border-rose-800 px-2 py-0.5 rounded-md">ASP</span>
+                                    <span class="text-sm font-black text-indigo-300 block">D</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mb-3"><strong class="text-rose-300">Grupo R:</strong> Grupo carboxilato adicional (-CH<sub>2</sub>-COO<sup>-</sup>).</p>
+                            <div class="text-[11px] bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 text-slate-300 space-y-1">
+                                <div>💡 <strong class="text-indigo-300">Ciclo de la Urea:</strong> Dona uno de los nitrógenos para la síntesis de urea hepática.</div>
+                                <div class="text-emerald-300 font-medium">⚡ <strong class="text-emerald-400">Molécula efectora:</strong> Neurotransmisor excitador.</div>
+                            </div>
+                        </div>
+
+                        <!-- Glutamate -->
+                        <div class="glass-card p-5 rounded-xl border border-rose-500/40">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold text-rose-200 text-base flex items-center gap-1.5">
+                                        Glutamato (Ácido Glutámico)
+                                        <i class="fa-solid fa-star text-amber-400 text-xs" title="Aminoácido Clave"></i>
+                                    </h4>
+                                    <span class="text-xs text-slate-400">Dicarboxílico largo</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-rose-400 bg-rose-950/80 border border-rose-800 px-2 py-0.5 rounded-md">GLU</span>
+                                    <span class="text-sm font-black text-indigo-300 block">E</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mb-3"><strong class="text-rose-300">Grupo R:</strong> Carboxilato con 2 carbonos (-CH<sub>2</sub>-CH<sub>2</sub>-COO<sup>-</sup>).</p>
+                            <div class="text-[11px] bg-rose-950/40 p-2.5 rounded-lg border border-rose-800/50 text-rose-200 space-y-1">
+                                <div>🧠 <strong class="text-rose-300">Neurotransmisor:</strong> El neurotransmisor excitador más abundante del SNC. Normal en Posición 6 de Hemoglobina.</div>
+                                <div class="text-emerald-300 font-medium">⚡ <strong class="text-emerald-400">Molécula efectora:</strong> Neurotransmisor excitador; precursor del neurotransmisor inhibidor GABA.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GROUP 4: BÁSICOS -->
+                <div id="group-basicos" class="group-content space-y-4 hidden">
+                    <div class="glass-panel p-4 rounded-2xl border-l-4 border-emerald-500 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h3 class="font-bold text-emerald-300 text-lg font-heading">Grupo 4: Básicos / Carga Positiva (Catiónicos a pH 7.4)</h3>
+                            <p class="text-xs text-slate-300">Aceptan protones en sus grupos laterales a pH fisiológico, adquiriendo una carga positiva (+1).</p>
+                        </div>
+                        <div class="bg-emerald-950/60 border border-emerald-500/40 px-3 py-2 rounded-xl text-xs text-emerald-200 flex items-center space-x-2 shrink-0">
+                            <span>🧲 MEME MEMORIA:</span>
+                            <span class="font-semibold">"Atraen protones y se mantienen con buena onda (+)"</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <!-- Lysine -->
+                        <div class="glass-card p-4 rounded-xl border border-slate-700/60">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold text-white text-base">Lisina</h4>
+                                    <span class="text-xs text-slate-400">Amino básico primario</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-emerald-400 bg-emerald-950/80 border border-emerald-800 px-2 py-0.5 rounded-md">LYS</span>
+                                    <span class="text-sm font-black text-indigo-300 block">K</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mb-3"><strong class="text-emerald-300">Grupo R:</strong> Cadena de 4 carbonos con grupo amino terminal (-(CH<sub>2</sub>)<sub>4</sub>-NH<sub>3</sub><sup>+</sup>).</p>
+                            <div class="text-[11px] bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 text-slate-300">
+                                💡 <strong class="text-indigo-300">Histonas:</strong> Se une electrostáticamente al ADN cargado negativamente.
+                            </div>
+                        </div>
+
+                        <!-- Arginine -->
+                        <div class="glass-card p-4 rounded-xl border border-slate-700/60">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold text-white text-base">Arginina</h4>
+                                    <span class="text-xs text-slate-400">Grupo Guanidino</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-emerald-400 bg-emerald-950/80 border border-emerald-800 px-2 py-0.5 rounded-md">ARG</span>
+                                    <span class="text-sm font-black text-indigo-300 block">R</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mb-3"><strong class="text-emerald-300">Grupo R:</strong> Posee el grupo Guanidino cargado muy fuertemente.</p>
+                            <div class="text-[11px] bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 text-slate-300 space-y-1">
+                                <div>💡 <strong class="text-indigo-300">Óxido Nítrico:</strong> Precursor directo de NO (vasodilatador potente).</div>
+                                <div class="text-emerald-300 font-medium">⚡ <strong class="text-emerald-400">Molécula efectora:</strong> Precursor inmediato de la urea y del óxido nítrico.</div>
+                            </div>
+                        </div>
+
+                        <!-- Histidine -->
+                        <div class="glass-card p-4 rounded-xl border border-slate-700/60">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h4 class="font-bold text-white text-base">Histidina</h4>
+                                    <span class="text-xs text-slate-400">Anillo Imidazol</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-sm font-extrabold text-emerald-400 bg-emerald-950/80 border border-emerald-800 px-2 py-0.5 rounded-md">HIS</span>
+                                    <span class="text-sm font-black text-indigo-300 block">H</span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-300 mb-3"><strong class="text-emerald-300">Grupo R:</strong> Anillo imidazol con pK<sub>a</sub> ≈ 6.0.</p>
+                            <div class="text-[11px] bg-slate-900/80 p-2.5 rounded-lg border border-slate-800 text-slate-300 space-y-1">
+                                <div>💡 <strong class="text-indigo-300">Amortiguador:</strong> Funciona como excelente buffer proteico fisiológico a pH 7.4.</div>
+                                <div class="text-emerald-300 font-medium">⚡ <strong class="text-emerald-400">Molécula efectora:</strong> Precursor de la histamina, mediador de la inflamación.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FILTRO RÁPIDO DE CLASIFICACIÓN FISIOLÓGICA -->
+                <div class="pt-6 border-t border-slate-800 space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div>
+                            <h3 class="font-bold text-white text-lg font-heading flex items-center gap-2">
+                                <i class="fa-solid fa-filter text-purple-400"></i> Filtro Rápido de Clasificación Fisiológica
+                            </h3>
+                            <p class="text-xs text-slate-400">Selecciona un grupo fisiológico para explorar rápidamente los aminoácidos correspondientes.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 text-xs">
+                            <button onclick="filterPhysio('all')" id="physio-btn-all" class="physio-btn active px-3 py-1.5 rounded-lg bg-indigo-600 text-white font-medium border border-indigo-500 transition">Todos (20)</button>
+                            <button onclick="filterPhysio('no-polares')" id="physio-btn-no-polares" class="physio-btn px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium border border-slate-700 transition">No Polares (9)</button>
+                            <button onclick="filterPhysio('polares-neutros')" id="physio-btn-polares-neutros" class="physio-btn px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium border border-slate-700 transition">Polares Neutros (6)</button>
+                            <button onclick="filterPhysio('acidos')" id="physio-btn-acidos" class="physio-btn px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium border border-slate-700 transition">Ácidos (-) (2)</button>
+                            <button onclick="filterPhysio('basicos')" id="physio-btn-basicos" class="physio-btn px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium border border-slate-700 transition">Básicos (+) (3)</button>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Grid output -->
+                    <div id="physio-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+
+                <!-- BIBLIOGRAFÍA TAB 2 -->
+                <div class="mt-8 pt-4 border-t border-slate-800 text-xs text-slate-400 space-y-2">
+                    <h4 class="font-bold text-slate-300 flex items-center gap-2 font-heading">
+                        <i class="fa-solid fa-book-bookmark text-indigo-400"></i> Referencias Bibliográficas (APA)
+                    </h4>
+                    <ul class="list-disc list-inside space-y-1 text-[11px] text-slate-400 pl-1">
+                        <li>Baynes, J.W., & Dominiczak, M.H. (2024). <i>Bioquímica médica (6.ª ed.)</i>. Elevier.</li>
+			<li>McKee, T. & McKee, J.R. (2020). <i> Bioquímica. Las bases moleculares de la vida (7.ª ed.).</i> McGraw-Hill Education.</li> 
+			<li>Horton, H.R., Moran, L.A., Scrimgeour, K. G., Perry, M. D., & Rawn, J. D. (2008). <i> Principios de bioquímica (4.ª ed.).</i> Pearson Educación </li>
+                        <li>Rodwell, V. W., Bender, D. A., Botham, K. M., Kennelly, P. J., & Weil, P. A. (2018). <i>Harper Bioquímica Ilustrada (31.ª ed.).</i> McGraw-Hill Education.</li>                        
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECTION 3: CLASIFICACIÓN NUTRICIONAL -->
+            <section id="tab-nutricional" class="tab-pane hidden space-y-6">
+                <div class="border-l-4 border-emerald-500 pl-4">
+                    <h2 class="text-2xl sm:text-3xl font-bold font-heading text-white">3. Clasificación Nutricional y Fisiológica</h2>
+                    <p class="text-slate-400 text-sm">Clasificación según la capacidad del organismo humano de sintetizar la cadena carbonada.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Esenciales -->
+                    <div class="glass-card p-5 rounded-2xl border-t-4 border-rose-500 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-white font-heading text-lg">Esenciales (8)</h3>
+                            <span class="bg-rose-950/80 text-rose-300 border border-rose-800 px-2 py-0.5 rounded text-xs font-bold">Dieta Obligatoria</span>
+                        </div>
+                        <p class="text-xs text-slate-300">El cuerpo humano no posee las vías enzimáticas para sintetizarlos. Deben ser consumidos en los alimentos.</p>
+                        <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 text-xs text-slate-300 space-y-1">
+                            <strong class="text-amber-400 block mb-1">Aminoácidos:</strong>
+                            <p class="text-[11px] text-slate-300">LEU, ILE, VAL, MET, LYS, THR, PHE y TRP.</p>
+                        </div>
+                    </div>
+
+                    <!-- Condicionales -->
+                    <div class="glass-card p-5 rounded-2xl border-t-4 border-amber-500 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-white font-heading text-lg">Condicionales (2)</h3>
+                            <span class="bg-amber-950/80 text-amber-300 border border-amber-800 px-2 py-0.5 rounded text-xs font-bold">Estrés / Crecimiento</span>
+                        </div>
+                        <p class="text-xs text-slate-300">Normalmente no esenciales, pero indispensables en situaciones de alta demanda metabólica (prematuridad, trauma, sepsis).</p>
+                        <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 text-xs text-slate-300">
+                            <strong class="text-amber-300">Aminoácidos:</strong> ARG e HIS.
+                        </div>
+                    </div>
+
+                    <!-- No Esenciales -->
+                    <div class="glass-card p-5 rounded-2xl border-t-4 border-emerald-500 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-white font-heading text-lg">No Esenciales (10)</h3>
+                            <span class="bg-emerald-950/80 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded text-xs font-bold">Sintetizables</span>
+                        </div>
+                        <p class="text-xs text-slate-300">El cuerpo los sintetiza a partir de intermediarios metabólicos como el piruvato, oxaloacetato o α-cetoglutarato.</p>
+                        <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-800 text-xs text-slate-300">
+                            <strong class="text-emerald-300">Aminoácidos:</strong> ALA, ASN, ASP, CYS, GLU, GLN, GLY, PRO, SER y TYR.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filtro Rápido de Clasificación Nutricional -->
+                <div class="pt-6 border-t border-slate-800 space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div>
+                            <h3 class="font-bold text-white text-lg font-heading flex items-center gap-2">
+                                <i class="fa-solid fa-filter text-emerald-400"></i> Filtro Rápido de Clasificación Nutricional
+                            </h3>
+                            <p class="text-xs text-slate-400">Selecciona una categoría para filtrar los aminoácidos en tiempo real.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5 text-xs">
+                            <button onclick="filterNutritional('all')" id="nut-btn-all" class="nut-btn active px-3 py-1.5 rounded-lg bg-indigo-600 text-white font-medium border border-indigo-500 transition">Todos (20)</button>
+                            <button onclick="filterNutritional('esencial')" id="nut-btn-esencial" class="nut-btn px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium border border-slate-700 transition">Esenciales (8)</button>
+                            <button onclick="filterNutritional('condicional')" id="nut-btn-condicional" class="nut-btn px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium border border-slate-700 transition">Condicionales (2)</button>
+                            <button onclick="filterNutritional('no-esencial')" id="nut-btn-no-esencial" class="nut-btn px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium border border-slate-700 transition">No Esenciales (10)</button>
+                        </div>
+                    </div>
+
+                    <div id="nutritional-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+                </div>
+
+                <!-- BIBLIOGRAFÍA TAB 3 -->
+                <div class="mt-8 pt-4 border-t border-slate-800 text-xs text-slate-400 space-y-2">
+                    <h4 class="font-bold text-slate-300 flex items-center gap-2 font-heading">
+                        <i class="fa-solid fa-book-bookmark text-indigo-400"></i> Referencias Bibliográficas (APA)
+                    </h4>
+                    <ul class="list-disc list-inside space-y-1 text-[11px] text-slate-400 pl-1">
+                        <li>Baynes, J.W., & Dominiczak, M.H. (2024). <i>Bioquímica médica (6.ª ed.)</i> (7.ª ed.). Elevier.</li>			
+			<li>Gil Hernández, A. (2017). <i>Tratado de Nutrición: Bases fisiológicas y bioquímicas de la nutrición (3.ª ed., Tomo I).</i> Editorial Médica Panamericana.</li>
+                        <li>Organización Mundial de la Salud. (2007). <i>Protein and amino acid requirements in human nutrition</i> (WHO Technical Report Series No. 935). World Health Organization.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECTION 4: NOMENCLATURA Y ABREVIATURAS -->
+            <section id="tab-nomenclatura" class="tab-pane hidden space-y-8">
+                <div class="border-l-4 border-pink-500 pl-4">
+                    <h2 class="text-2xl sm:text-3xl font-bold font-heading text-white">4. Nomenclatura y Abreviaturas: Códigos de 3 Letras y 1 Letra</h2>
+                    <p class="text-slate-400 text-sm">Aprende y repasa los dos sistemas de nomenclatura estandarizados por la IUPAC-IUBMB con reglas de asignación y flashcards de recuerdo activo.</p>
+                </div>
+
+                <!-- BLOQUE SUPERIOR: NOMENCLATURA DE 3 LETRAS -->
+                <div class="glass-panel p-6 rounded-2xl border border-indigo-500/30 space-y-6">
+                    <div class="flex items-center space-x-3 border-b border-slate-800 pb-4">
+                        <div class="p-2.5 rounded-xl bg-indigo-500/20 text-indigo-400 font-extrabold text-xl font-heading">
+                            3L
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-white text-xl font-heading">Abreviaturas de Tres Letras (Código Clásico)</h3>
+                            <p class="text-xs text-slate-300">Utilizado ampliamente en publicaciones médicas, bioquímica clínica y secuencias de péptidos cortos.</p>
+                        </div>
+                    </div>
+
+                    <!-- Reglas de 3 letras -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                        <div class="glass-card p-4 rounded-xl border border-slate-700">
+                            <h4 class="font-bold text-indigo-300 mb-1">Regla 1: Primeras 3 Letras</h4>
+                            <p class="text-slate-300">Generalmente son las primeras tres letras del nombre del aminoácido con la inicial en mayúscula.</p>
+                            <span class="inline-block mt-2 font-mono text-indigo-200 bg-indigo-950/80 px-2 py-0.5 rounded">Ala, Val, Leu, Met, Gly</span>
+                        </div>
+                        <div class="glass-card p-4 rounded-xl border border-slate-700">
+                            <h4 class="font-bold text-indigo-300 mb-1">Regla 2: Excepciones por Amidas</h4>
+                            <p class="text-slate-300">Para evitar confusión entre ácido y amida, las amidas usan la combinación distintiva de letras.</p>
+                            <span class="inline-block mt-2 font-mono text-indigo-200 bg-indigo-950/80 px-2 py-0.5 rounded">Asn (Asparagina), Gln (Glutamina)</span>
+                        </div>
+                        <div class="glass-card p-4 rounded-xl border border-slate-700">
+                            <h4 class="font-bold text-indigo-300 mb-1">Regla 3: Isómeros</h4>
+                            <p class="text-slate-300">Isómeros como la Isoleucina anteceden la 'I' para diferenciarse de la Leucina.</p>
+                            <span class="inline-block mt-2 font-mono text-indigo-200 bg-indigo-950/80 px-2 py-0.5 rounded">Ile (Isoleucina) vs Leu (Leucina)</span>
+                        </div>
+                    </div>
+
+                    <!-- FLASHCARD DE 3 LETRAS -->
+                    <div class="bg-slate-900/90 p-6 rounded-2xl border border-indigo-500/20 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-indigo-300 text-sm font-heading flex items-center gap-2">
+                                <i class="fa-solid fa-clone text-indigo-400"></i> Flashcard de Recuerdo Activo — Código de 3 Letras
+                            </h4>
+                            <span id="flash-counter-3" class="text-xs text-slate-400 font-mono">1 / 20</span>
+                        </div>
+
+                        <!-- Card Flip 3 Letters -->
+                        <div class="perspective-1000 w-full max-w-md mx-auto h-52 cursor-pointer" onclick="flipCard3()">
+                            <div id="flash-card-inner-3" class="relative w-full h-full transition-transform duration-500 transform-style-3d glass-card rounded-2xl border-2 border-indigo-500/40 shadow-xl flex items-center justify-center p-6 text-center">
+                                <!-- Front Side -->
+                                <div id="flash-front-3" class="absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6">
+                                    <span class="text-xs font-bold tracking-widest text-indigo-400 uppercase mb-2">Nombre del Aminoácido</span>
+                                    <h3 id="flash-name-3" class="text-2xl font-extrabold text-white font-heading">Glicina</h3>
+                                    <p class="text-xs text-slate-400 mt-3">Haz clic para voltear la tarjeta y revelar la abreviatura de 3 letras</p>
+                                </div>
+                                <!-- Back Side -->
+                                <div id="flash-back-3" class="absolute inset-0 backface-hidden rotate-y-180 flex flex-col items-center justify-center p-6 bg-gradient-to-br from-indigo-950 to-slate-900 rounded-2xl">
+                                    <span class="text-xs font-bold tracking-widest text-indigo-300 uppercase mb-1">Abreviatura de 3 Letras</span>
+                                    <div id="flash-code3-val" class="text-4xl font-black text-amber-400 font-mono tracking-widest my-1">GLY</div>
+                                    <p id="flash-tip-3" class="text-xs text-slate-300 italic mt-2">El más pequeño y flexible.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Flashcard Controls -->
+                        <div class="flex justify-center items-center gap-3 pt-2">
+                            <button onclick="prevFlashcard3()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition">
+                                <i class="fa-solid fa-chevron-left mr-1"></i> Anterior
+                            </button>
+                            <button onclick="flipCard3()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition">
+                                <i class="fa-solid fa-rotate mr-1"></i> Voltear
+                            </button>
+                            <button onclick="nextFlashcard3()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition">
+                                Siguiente <i class="fa-solid fa-chevron-right ml-1"></i>
+                            </button>
+                            <button onclick="randomFlashcard3()" class="px-3 py-2 rounded-xl bg-purple-950 hover:bg-purple-900 text-purple-300 text-xs font-semibold border border-purple-800 transition">
+                                <i class="fa-solid fa-shuffle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BLOQUE INFERIOR: NOMENCLATURA DE 1 LETRA -->
+                <div class="glass-panel p-6 rounded-2xl border border-pink-500/30 space-y-6">
+                    <div class="flex items-center space-x-3 border-b border-slate-800 pb-4">
+                        <div class="p-2.5 rounded-xl bg-pink-500/20 text-pink-400 font-extrabold text-xl font-heading">
+                            1L
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-white text-xl font-heading">Abreviaturas de Una Letra (Hack de Asignación Rápida)</h3>
+                            <p class="text-xs text-slate-300">Esencial para bioinformática, análisis de secuencias genómicas y proteómica moderna.</p>
+                        </div>
+                    </div>
+
+                    <!-- Reglas de 1 letra -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
+                        <div class="glass-card p-4 rounded-xl border border-slate-700">
+                            <h4 class="font-bold text-pink-300 mb-1">1. Letra Única Directa</h4>
+                            <p class="text-slate-300">Aminoácidos con inicial sin duplicar en la lista estándar.</p>
+                            <span class="inline-block mt-2 font-mono text-pink-200 bg-pink-950/80 px-2 py-0.5 rounded">C, H, I, M, P, S, V</span>
+                        </div>
+                        <div class="glass-card p-4 rounded-xl border border-slate-700">
+                            <h4 class="font-bold text-pink-300 mb-1">2. Más Frecuentes</h4>
+                            <p class="text-slate-300">Si varios comparten inicial, la recibe el más común en proteínas.</p>
+                            <span class="inline-block mt-2 font-mono text-pink-200 bg-pink-950/80 px-2 py-0.5 rounded">A (Ala), L (Leu), G (Gly)</span>
+                        </div>
+                        <div class="glass-card p-4 rounded-xl border border-slate-700">
+                            <h4 class="font-bold text-pink-300 mb-1">3. Fonética</h4>
+                            <p class="text-slate-300">Basado en cómo suena la inicial en inglés o latín.</p>
+                            <span class="inline-block mt-2 font-mono text-pink-200 bg-pink-950/80 px-2 py-0.5 rounded">F (Fenilalanina / Phen), R (aRginina)</span>
+                        </div>
+                        <div class="glass-card p-4 rounded-xl border border-slate-700">
+                            <h4 class="font-bold text-pink-300 mb-1">4. Forma / Estructura</h4>
+                            <p class="text-slate-300">Letra cercana en el alfabeto o sugerente del grupo.</p>
+                            <span class="inline-block mt-2 font-mono text-pink-200 bg-pink-950/80 px-2 py-0.5 rounded">D (aspartico), E (glutamico), W (Tryptophan)</span>
+                        </div>
+                    </div>
+
+                    <!-- FLASHCARD DE 1 LETRA -->
+                    <div class="bg-slate-900/90 p-6 rounded-2xl border border-pink-500/20 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-pink-300 text-sm font-heading flex items-center gap-2">
+                                <i class="fa-solid fa-brain text-pink-400"></i> Flashcard de Recuerdo Activo — Código de 1 Letra
+                            </h4>
+                            <span id="flash-counter-1" class="text-xs text-slate-400 font-mono">1 / 20</span>
+                        </div>
+
+                        <!-- Card Flip 1 Letter -->
+                        <div class="perspective-1000 w-full max-w-md mx-auto h-52 cursor-pointer" onclick="flipCard1()">
+                            <div id="flash-card-inner-1" class="relative w-full h-full transition-transform duration-500 transform-style-3d glass-card rounded-2xl border-2 border-pink-500/40 shadow-xl flex items-center justify-center p-6 text-center">
+                                <!-- Front Side -->
+                                <div id="flash-front-1" class="absolute inset-0 backface-hidden flex flex-col items-center justify-center p-6">
+                                    <span class="text-xs font-bold tracking-widest text-pink-400 uppercase mb-2">Nombre del Aminoácido</span>
+                                    <h3 id="flash-name-1" class="text-2xl font-extrabold text-white font-heading">Glicina</h3>
+                                    <p class="text-xs text-slate-400 mt-3">Haz clic para voltear la tarjeta y revelar la letra única</p>
+                                </div>
+                                <!-- Back Side -->
+                                <div id="flash-back-1" class="absolute inset-0 backface-hidden rotate-y-180 flex flex-col items-center justify-center p-6 bg-gradient-to-br from-pink-950 to-slate-900 rounded-2xl">
+                                    <span class="text-xs font-bold tracking-widest text-pink-300 uppercase mb-1">Abreviatura de 1 Letra</span>
+                                    <div id="flash-code1-val" class="text-6xl font-black text-pink-400 font-mono tracking-widest my-1">G</div>
+                                    <p id="flash-tip-1" class="text-xs text-slate-300 italic mt-2">Letra inicial simple directa.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Flashcard Controls -->
+                        <div class="flex justify-center items-center gap-3 pt-2">
+                            <button onclick="prevFlashcard1()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition">
+                                <i class="fa-solid fa-chevron-left mr-1"></i> Anterior
+                            </button>
+                            <button onclick="flipCard1()" class="px-4 py-2 rounded-xl bg-pink-600 hover:bg-pink-500 text-white text-xs font-semibold transition">
+                                <i class="fa-solid fa-rotate mr-1"></i> Voltear
+                            </button>
+                            <button onclick="nextFlashcard1()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition">
+                                Siguiente <i class="fa-solid fa-chevron-right ml-1"></i>
+                            </button>
+                            <button onclick="randomFlashcard1()" class="px-3 py-2 rounded-xl bg-purple-950 hover:bg-purple-900 text-purple-300 text-xs font-semibold border border-purple-800 transition">
+                                <i class="fa-solid fa-shuffle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BIBLIOGRAFÍA TAB 4 -->
+                <div class="mt-8 pt-4 border-t border-slate-800 text-xs text-slate-400 space-y-2">
+                    <h4 class="font-bold text-slate-300 flex items-center gap-2 font-heading">
+                        <i class="fa-solid fa-book-bookmark text-indigo-400"></i> Referencias Bibliográficas (APA)
+                    </h4>
+                    <ul class="list-disc list-inside space-y-1 text-[11px] text-slate-400 pl-1">
+                        <li>Baynes, J.W., & Dominiczak, M.H. (2024). <i>Bioquímica médica (6.ª ed.)</i>. Elevier.</li>
+			<li>McKee, T. & McKee, J.R. (2020). <i> Bioquímica. Las bases moleculares de la vida (7.ª ed.).</i> McGraw-Hill Education.</li> 
+			<li>Horton, H.R., Moran, L.A., Scrimgeour, K. G., Perry, M. D., & Rawn, J. D. (2008). <i> Principios de bioquímica (4.ª ed.).</i> Pearson Educación </li>
+			<li>Ferrier, D. R. (2017). <i>Lippincott Illustrated Reviews: Bioquímica</i> (7.ª ed.).</i> Wolters Kluwer.</li>
+                        <li>IUPAC-IUB Commission on Biochemical Nomenclature. (1984). Nomenclature and symbolism for amino acids and peptides. <i>European Journal of Biochemistry</i>, 138(1), 9–37. https://doi.org/10.1111/j.1432-1033.1984.tb07877.x</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECTION 5: CASO CLÍNICO - ANEMIA FALCIFORME -->
+            <section id="tab-caso-clinico" class="tab-pane hidden space-y-8">
+                <div class="border-l-4 border-amber-500 pl-4">
+                    <h2 class="text-2xl sm:text-3xl font-bold font-heading text-white">5. Caso Clínico Integrador: Anemia Falciforme (Drepanocitosis)</h2>
+                    <p class="text-slate-400 text-sm">Comprende cómo la sustitución de un solo aminoácido altera el Plegamiento Proteico, la forma celular y la microcirculación de un paciente.</p>
+                </div>
+
+                <!-- SIMULADOR DE SECUENCIA Y PLEGAMIENTO PROTEICO -->
+                <div class="glass-panel p-6 rounded-2xl border border-amber-500/40 space-y-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                        <div>
+                            <span class="text-xs font-bold text-amber-400 bg-amber-950/80 px-2.5 py-1 rounded border border-amber-800">Simulador de Secuencia y Plegamiento</span>
+                            <h3 class="text-xl font-bold text-white font-heading mt-1">Mutación en la Posición 6 de la Cadena β-Globina</h3>
+                            <p class="text-xs text-slate-300">Interactúa con la secuencia para alternar entre el aminoácido salvaje (Glu) y el mutado (Val) para observar la transición de hemoglobina redonda a hemoglobina en cadenas.</p>
+                        </div>
+
+                        <!-- Mutation Toggle Switch -->
+                        <div class="flex items-center space-x-3 bg-slate-900 p-2 rounded-xl border border-slate-800 shrink-0">
+                            <span id="label-hba" class="text-xs font-bold text-emerald-400">Normal (HbA)</span>
+                            <button onclick="togglePeptideMutation()" id="btn-peptide-toggle" class="relative inline-flex h-7 w-14 items-center rounded-full bg-emerald-600 transition-colors focus:outline-none">
+                                <span id="toggle-circle" class="inline-block h-5 w-5 transform rounded-full bg-white transition-transform translate-x-1"></span>
+                            </button>
+                            <span id="label-hbs" class="text-xs font-bold text-slate-500">Mutado (HbS)</span>
+                        </div>
+                    </div>
+
+                    <!-- Sequence Bar Display -->
+                    <div class="space-y-3">
+                        <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Secuencia Aminoterminal de la β-Globina:</h4>
+                        <div class="flex flex-wrap items-center gap-2 overflow-x-auto py-2 custom-scrollbar">
+                            <div class="px-3 py-2 bg-slate-800 rounded-lg text-center border border-slate-700 shrink-0">
+                                <span class="text-[10px] text-slate-400 block">Pos 1</span>
+                                <span class="font-mono font-bold text-xs text-slate-200">Val</span>
+                            </div>
+                            <span class="text-slate-600">-</span>
+                            <div class="px-3 py-2 bg-slate-800 rounded-lg text-center border border-slate-700 shrink-0">
+                                <span class="text-[10px] text-slate-400 block">Pos 2</span>
+                                <span class="font-mono font-bold text-xs text-slate-200">His</span>
+                            </div>
+                            <span class="text-slate-600">-</span>
+                            <div class="px-3 py-2 bg-slate-800 rounded-lg text-center border border-slate-700 shrink-0">
+                                <span class="text-[10px] text-slate-400 block">Pos 3</span>
+                                <span class="font-mono font-bold text-xs text-slate-200">Leu</span>
+                            </div>
+                            <span class="text-slate-600">-</span>
+                            <div class="px-3 py-2 bg-slate-800 rounded-lg text-center border border-slate-700 shrink-0">
+                                <span class="text-[10px] text-slate-400 block">Pos 4</span>
+                                <span class="font-mono font-bold text-xs text-slate-200">Thr</span>
+                            </div>
+                            <span class="text-slate-600">-</span>
+                            <div class="px-3 py-2 bg-slate-800 rounded-lg text-center border border-slate-700 shrink-0">
+                                <span class="text-[10px] text-slate-400 block">Pos 5</span>
+                                <span class="font-mono font-bold text-xs text-slate-200">Pro</span>
+                            </div>
+                            <span class="text-amber-400 font-bold">-</span>
+                            
+                            <!-- MUTATED POSITION 6 ITEM -->
+                            <div id="pos6-box" class="px-4 py-2 bg-emerald-950/90 rounded-xl text-center border-2 border-emerald-500 shrink-0 shadow-lg transition-all scale-105">
+                                <span class="text-[10px] text-emerald-300 font-bold block uppercase tracking-wider">★ Posición 6 ★</span>
+                                <span id="pos6-code" class="font-mono font-black text-sm text-emerald-300 block">Glu (Glutamato)</span>
+                                <span id="pos6-charge" class="text-[10px] text-emerald-200 block font-semibold">Carga Negativa (-)</span>
+                            </div>
+
+                            <span class="text-amber-400 font-bold">-</span>
+                            <div class="px-3 py-2 bg-slate-800 rounded-lg text-center border border-slate-700 shrink-0">
+                                <span class="text-[10px] text-slate-400 block">Pos 7</span>
+                                <span class="font-mono font-bold text-xs text-slate-200">Glu</span>
+                            </div>
+                            <span class="text-slate-600">-</span>
+                            <div class="px-3 py-2 bg-slate-800 rounded-lg text-center border border-slate-700 shrink-0">
+                                <span class="text-[10px] text-slate-400 block">Pos 8</span>
+                                <span class="font-mono font-bold text-xs text-slate-200">Lys</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Folding & Polymerization Explanation -->
+                    <div id="folding-impact-card" class="glass-card p-5 rounded-xl border-l-4 border-emerald-500 bg-slate-900/80 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h4 id="folding-title" class="font-bold text-emerald-300 text-sm font-heading">Estructura Proteica: Hemoglobina Redonda (Soluble)</h4>
+                            <span id="folding-badge" class="text-xs font-semibold text-emerald-300 bg-emerald-950 px-2.5 py-1 rounded border border-emerald-800">Monómeros / Tetrámeros Libres</span>
+                        </div>
+                        <p id="folding-desc" class="text-xs text-slate-300 leading-relaxed">
+                            El <strong>Glutamato (Glu)</strong> es polar cargado negativamente. Permite que la hemoglobina adopte una forma redonda y globular independiente, totalmente soluble dentro del citoplasma eritrocitario.
+                        </p>
+
+                        <!-- Visual Comparison Graphic: Spherical/Round Hemoglobin vs Fiber/Chained Hemoglobin -->
+                        <div class="p-4 bg-slate-950/90 rounded-xl border border-slate-800 flex flex-col md:flex-row items-center justify-around gap-4 text-center">
+                            <div class="space-y-1">
+                                <div id="protein-graphic-1" class="w-20 h-20 mx-auto rounded-full bg-emerald-500/20 border-2 border-emerald-400 flex items-center justify-center text-3xl shadow-lg transition-all duration-300">
+                                    🔴
+                                </div>
+                                <span id="protein-label-1" class="text-[11px] font-bold text-emerald-300 block">Hemoglobina Redonda</span>
+                            </div>
+                            <div class="text-slate-500 text-lg">➔</div>
+                            <div class="space-y-1">
+                                <div id="protein-graphic-2" class="w-24 h-20 mx-auto rounded-2xl bg-emerald-950/40 border border-emerald-500/40 flex items-center justify-center gap-1.5 p-2 transition-all duration-300">
+                                    <div class="w-6 h-6 rounded-full bg-rose-500/80 border border-rose-300"></div>
+                                    <div class="w-6 h-6 rounded-full bg-rose-500/80 border border-rose-300"></div>
+                                </div>
+                                <span id="protein-label-2" class="text-[11px] font-bold text-emerald-300 block">Tetrámeros Solubles</span>
+                            </div>
+                            <div class="text-slate-500 text-lg">➔</div>
+                            <div class="space-y-1">
+                                <div id="protein-graphic-3" class="w-28 h-20 mx-auto rounded-xl bg-slate-900 border border-emerald-500/50 flex items-center justify-center text-xs text-emerald-300 p-2 font-bold">
+                                    Citoplasma Fluido
+                                </div>
+                                <span id="protein-label-3" class="text-[11px] font-bold text-emerald-300 block">Sin Agregación</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SIMULADOR MORFOLÓGICO CELULAR CON ERITROCITO FALCIFORME Y DOS CADENAS DE HbS -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                        <div>
+                            <span class="text-xs font-bold text-amber-400 bg-amber-950/80 px-2.5 py-1 rounded border border-amber-800">Simulador Morfológico Celular</span>
+                            <h3 class="text-xl font-bold text-white font-heading mt-1">Efecto Hemostático y Deformación Eritrocitaria</h3>
+                            <p class="text-xs text-slate-300">Observa cómo las cadenas rígidas de HbS polimerizada alteran la membrana del glóbulo rojo, transformándolo en una hoz y desencadenando el cuadro clínico.</p>
+                        </div>
+                        <div class="flex gap-2 shrink-0">
+                            <button onclick="setHemoglobinState('hba')" id="btn-hba" class="px-4 py-2 rounded-xl text-xs font-bold transition bg-emerald-600 text-white shadow">
+                                Hemoglobina A (Normal)
+                            </button>
+                            <button onclick="setHemoglobinState('hbs')" id="btn-hbs" class="px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-800 text-slate-400 hover:text-white">
+                                Hemoglobina S (Falciforme)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                        <!-- Cell Morphological Render Area -->
+                        <div class="lg:col-span-6 flex justify-center">
+                            <div class="glass-card p-6 rounded-2xl border border-slate-700 text-center w-full max-w-md space-y-4">
+                                <div id="rbc-visual-container" class="w-56 h-56 mx-auto rounded-full bg-slate-900/80 border-2 border-slate-700 flex items-center justify-center transition-all duration-500 shadow-2xl relative overflow-hidden p-2">
+                                    
+                                    <!-- Dynamic SVG Cell Representation -->
+                                    <svg id="cell-svg" class="w-full h-full transition-all duration-500" viewBox="0 0 200 200">
+                                        <!-- Normal HbA Disc -->
+                                        <g id="svg-hba-group">
+                                            <circle cx="100" cy="100" r="75" fill="url(#grad-hba)" stroke="#e11d48" stroke-width="4"/>
+                                            <circle cx="100" cy="100" r="40" fill="#be123c" opacity="0.6"/>
+                                            
+                                            <!-- Figuras (Círculos) que representan la hemoglobina normal soluble (HbA) -->
+                                            <circle cx="80" cy="80" r="7" fill="#fda4af" opacity="0.8"/>
+                                            <circle cx="120" cy="80" r="7" fill="#fda4af" opacity="0.8"/>
+                                            <circle cx="80" cy="120" r="7" fill="#fda4af" opacity="0.8"/>
+                                            <circle cx="120" cy="120" r="7" fill="#fda4af" opacity="0.8"/>
+                                            <circle cx="100" cy="70" r="7" fill="#fda4af" opacity="0.8"/>
+                                            <circle cx="100" cy="130" r="7" fill="#fda4af" opacity="0.8"/>
+
+                                            <text x="100" y="105" fill="white" font-size="18" font-weight="extrabold" text-anchor="middle">HbA</text>
+                                        </g>
+
+                                        <!-- Sickle HbS Crescent + 2 HbS Polymer Chains (Initially Hidden) -->
+                                        <g id="svg-hbs-group" class="hidden">
+                                            <!-- Sickle/Hoz Cell Membrane -->
+                                            <path d="M 40,30 C 130,10 180,70 170,140 C 160,180 120,190 80,180 C 130,150 140,90 40,30 Z" fill="url(#grad-hbs)" stroke="#991b1b" stroke-width="3.5"/>
+                                            
+                                            <!-- HbS Internal Chain / Tira 1 -->
+                                            <path d="M 50,42 C 115,35 152,80 148,142" stroke="#f59e0b" stroke-width="5" stroke-dasharray="6 3" stroke-linecap="round" fill="none"/>
+                                            
+                                            <!-- HbS Internal Chain / Tira 2 -->
+                                            <path d="M 62,55 C 122,50 142,95 130,160" stroke="#fcd34d" stroke-width="4" stroke-dasharray="5 3" stroke-linecap="round" fill="none"/>
+
+                                            <text x="105" y="115" fill="#fef3c7" font-size="14" font-weight="black" text-anchor="middle" transform="rotate(-20 105 115)">HbS</text>
+                                        </g>
+
+                                        <!-- Gradient Definitions -->
+                                        <defs>
+                                            <radialGradient id="grad-hba" cx="50%" cy="50%" r="50%">
+                                                <stop offset="0%" stop-color="#f43f5e"/>
+                                                <stop offset="100%" stop-color="#881337"/>
+                                            </radialGradient>
+                                            <linearGradient id="grad-hbs" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" stop-color="#dc2626"/>
+                                                <stop offset="100%" stop-color="#450a0a"/>
+                                            </linearGradient>
+                                        </defs>
+                                    </svg>
+                                </div>
+
+                                <div>
+                                    <h4 id="rbc-title" class="font-bold text-white text-base font-heading">Eritrocito Bicóncavo Flexible</h4>
+                                    <span id="rbc-subtitle" class="text-xs text-emerald-400 font-semibold">Flujo libre en microcapilares (&lt; 8 micras)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fisiopatología & Stats -->
+                        <div class="lg:col-span-6 space-y-4">
+                            <div id="clinical-summary-box" class="glass-card p-5 rounded-2xl border-l-4 border-emerald-500 space-y-2">
+                                <h4 id="summary-title" class="font-bold text-white text-sm">Fisiopatología Vascular:</h4>
+                                <p id="summary-desc" class="text-xs text-slate-300 leading-relaxed">
+                                    Los glóbulos rojos normales son discos bicóncavos extraordinariamente deformables. Pueden comprimirse para pasar por capilares más estrechos que su propio diámetro sin romperse.
+                                </p>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3 text-xs">
+                                <div class="glass-card p-3 rounded-xl border border-slate-800">
+                                    <span class="text-slate-400 block">Vida Media Celular:</span>
+                                    <span id="stat-lifespan" class="font-bold text-emerald-400 text-sm">120 días</span>
+                                </div>
+                                <div class="glass-card p-3 rounded-xl border border-slate-800">
+                                    <span class="text-slate-400 block">Riesgo Oclusivo:</span>
+                                    <span id="stat-occlusion" class="font-bold text-emerald-400 text-sm">Mínimo / Nulo</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PANEL DE SÍNTOMAS DE LA ANEMIA FALCIFORME (DESPLEGABLE CON HbS) -->
+                    <div id="symptoms-panel" class="hidden glass-card p-6 rounded-2xl border-2 border-amber-500/50 bg-gradient-to-br from-amber-950/40 via-slate-900 to-rose-950/40 space-y-4 transition-all">
+                        <div class="flex items-center space-x-3 border-b border-amber-500/30 pb-3">
+                            <div class="p-2 rounded-lg bg-amber-500/20 text-amber-400">
+                                <i class="fa-solid fa-notes-medical text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-amber-200 text-base font-heading">Cuadro Clínico y Síntomas de la Anemia Falciforme</h4>
+                                <p class="text-xs text-slate-300">Manifestaciones secundarias a la vasoclusión microvascular y la hemólisis extravascular acelerada.</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+                            <div class="bg-slate-900/90 p-3.5 rounded-xl border border-amber-500/30 space-y-1">
+                                <div class="font-bold text-amber-300 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-bolt-lightning text-rose-400"></i> Crisis Vasooclusivas (Dolorosas)
+                                </div>
+                                <p class="text-slate-300 text-[11px] leading-relaxed">
+                                    Episodios de dolor agudo e severo en huesos largos, tórax y abdomen por isquemia tisular focal por taponamiento capilar.
+                                </p>
+                            </div>
+
+                            <div class="bg-slate-900/90 p-3.5 rounded-xl border border-amber-500/30 space-y-1">
+                                <div class="font-bold text-amber-300 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-droplet text-rose-400"></i> Anemia Hemolítica Crónica
+                                </div>
+                                <p class="text-slate-300 text-[11px] leading-relaxed">
+                                    Fatiga extrema, palidez e ictericia (coloración amarillenta de escleras) por destrucción de hematíes (10-20 días de vida media).
+                                </p>
+                            </div>
+
+                            <div class="bg-slate-900/90 p-3.5 rounded-xl border border-amber-500/30 space-y-1">
+                                <div class="font-bold text-amber-300 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-hand-dots text-rose-400"></i> Dactilitis (Síndrome Mano-Pie)
+                                </div>
+                                <p class="text-slate-300 text-[11px] leading-relaxed">
+                                    Hinchazón dolorosa e inflamación de manos y pies en lactantes y niños pequeños por infarto óseo digital.
+                                </p>
+                            </div>
+
+                            <div class="bg-slate-900/90 p-3.5 rounded-xl border border-amber-500/30 space-y-1">
+                                <div class="font-bold text-amber-300 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-lungs text-rose-400"></i> Síndrome Torácico Agudo
+                                </div>
+                                <p class="text-slate-300 text-[11px] leading-relaxed">
+                                    Complicación pulmonar grave con dolor torácico, fiebre, taquipnea e hipoxia que requiere hospitalización urgente.
+                                </p>
+                            </div>
+
+                            <div class="bg-slate-900/90 p-3.5 rounded-xl border border-amber-500/30 space-y-1">
+                                <div class="font-bold text-amber-300 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-shield-virus text-rose-400"></i> Infecciones Recurrentes
+                                </div>
+                                <p class="text-slate-300 text-[11px] leading-relaxed">
+                                    Mayor vulnerabilidad a gérmenes encapsulados (como <i>S. pneumoniae</i>) debido a asplenia funcional por microinfartos esplénicos.
+                                </p>
+                            </div>
+
+                            <div class="bg-slate-900/90 p-3.5 rounded-xl border border-amber-500/30 space-y-1">
+                                <div class="font-bold text-amber-300 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-user-ninja text-rose-400"></i> Afección de Órganos Blanco
+                                </div>
+                                <p class="text-slate-300 text-[11px] leading-relaxed">
+                                    Riesgo elevado de accidente cerebrovascular (ACV), priapismo, nefropatía drepanocítica y úlceras maleolares crónicas.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BIBLIOGRAFÍA TAB 5 -->
+                <div class="mt-8 pt-4 border-t border-slate-800 text-xs text-slate-400 space-y-2">
+                    <h4 class="font-bold text-slate-300 flex items-center gap-2 font-heading">
+                        <i class="fa-solid fa-book-bookmark text-indigo-400"></i> Referencias Bibliográficas (APA)
+                    </h4>
+                    <ul class="list-disc list-inside space-y-1 text-[11px] text-slate-400 pl-1">
+                        <li>Baynes, J.W., & Dominiczak, M.H. (2024). <i>Bioquímica médica (6.ª ed.)</i> Elevier.</li>			
+			<li>Eaton, W. A., & Hofrichter, J. (1990). Sickle cell hemoglobin polymerization. <i>Advances in Protein Chemistry</i>, 40, 63–279. https://doi.org/10.1016/S0065-3233(08)60287-9</li>
+                        <li>Kaul, D. K., Fabry, M. E., & Nagel, R. L. (1996). The pathophysiology of vascular occlusion in sickle cell disease. <i>Hematology/Oncology Clinics of North America</i>, 10(6), 1263–1277. https://doi.org/10.1016/S0268-960X(96)90018-1</span></li>
+                        <li>Steinberg, M. H. (2008). Sickle cell anemia: the first molecular disease. <i>Annals of Internal Medicine</i>, 149(3), 193–201. https://doi.org/10.1100/tsw.2008.157</span></li>                        
+                    </ul>
+                </div>
+            </section>
+
+            <!-- SECTION 6: MÉTODO FEYNMAN -->
+            <section id="tab-estudio-feynman" class="tab-pane hidden space-y-6">
+                <div class="border-l-4 border-indigo-500 pl-4">
+                    <h2 class="text-2xl sm:text-3xl font-bold font-heading text-white">6. Módulo de Auto-Evaluación (Técnica Feynman)</h2>
+                    <p class="text-slate-400 text-sm">Explicar un concepto en lenguaje sencillo sin jerga técnica es la mejor prueba de dominio bioquímico.</p>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl border border-indigo-500/30 space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        <!-- Left Panel: Prompt Selector -->
+                        <div class="lg:col-span-5 space-y-4">
+                            <h3 class="font-bold text-white text-base font-heading">1. Selecciona un Desafío Explicativo</h3>
+                            <div class="space-y-2 text-xs">
+                                <button onclick="loadFeynmanPrompt('falciforme')" class="w-full text-left p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex justify-between items-center">
+                                    <span>Anemia Falciforme a un Paciente</span>
+                                    <i class="fa-solid fa-chevron-right text-indigo-400"></i>
+                                </button>
+                                <button onclick="loadFeynmanPrompt('polares')" class="w-full text-left p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex justify-between items-center">
+                                    <span>¿Por qué los no polares huyen del agua?</span>
+                                    <i class="fa-solid fa-chevron-right text-indigo-400"></i>
+                                </button>
+                                <button onclick="loadFeynmanPrompt('efectoras')" class="w-full text-left p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex justify-between items-center">
+                                    <span>Aminoácidos como Moléculas Efectoras</span>
+                                    <i class="fa-solid fa-chevron-right text-indigo-400"></i>
+                                </button>
+                            </div>
+
+                            <div class="glass-card p-4 rounded-xl border border-indigo-500/20 text-xs space-y-1">
+                                <span class="font-bold text-indigo-300 block">💡 Regla Feynman:</span>
+                                <p class="text-slate-300">Si usas palabras complejas como "propiedad anfipática" o "efecto hidrofóbico solvatado", debes definirlas con una analogía simple.</p>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Writing Area -->
+                        <div class="lg:col-span-7 space-y-4">
+                            <div class="flex justify-between items-center">
+                                <h3 id="feynman-prompt-title" class="font-bold text-indigo-300 text-sm font-heading">Desafío: Explica la Anemia Falciforme</h3>
+                                <span id="word-count" class="text-xs text-slate-400 font-mono">0 palabras</span>
+                            </div>
+
+                            <textarea id="feynman-text" oninput="updateWordCount()" rows="7" placeholder="Escribe aquí tu explicación simplificada como si se la contaras a un familiar no médico..." class="w-full p-4 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 text-xs focus:outline-none focus:border-indigo-500 custom-scrollbar"></textarea>
+
+                            <div class="flex justify-end gap-2">
+                                <button onclick="toggleFeynmanFeedback()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition">
+                                    Verificar Conceptos Clave <i class="fa-solid fa-check-double ml-1"></i>
+                                </button>
+                            </div>
+
+                            <!-- Feedback CheckList -->
+                            <div id="feynman-checklist" class="hidden p-4 rounded-xl bg-indigo-950/60 border border-indigo-800/50 text-xs space-y-2">
+                                <h4 class="font-bold text-indigo-200">Lista de Cotejo Feynman:</h4>
+                                <ul class="space-y-1 text-slate-300">
+                                    <li><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> ¿Mencionaste que el cambio de Glutamato por Valina modifica la polaridad?</li>
+                                    <li><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> ¿Explicaste por qué se forman fibras o polímeros rígidos?</li>
+                                    <li><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> ¿Conectaste la forma de hoz/media luna con el taponamiento capilar?</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BIBLIOGRAFÍA TAB 6 -->
+                <div class="mt-8 pt-4 border-t border-slate-800 text-xs text-slate-400 space-y-2">
+                    <h4 class="font-bold text-slate-300 flex items-center gap-2 font-heading">
+                        <i class="fa-solid fa-book-bookmark text-indigo-400"></i> Referencias Bibliográficas (APA)
+                    </h4>
+                    <ul class="list-disc list-inside space-y-1 text-[11px] text-slate-400 pl-1">
+                        <li>Brown, P. C., Roediger, H. L., & McDaniel, M. A. (2014). <i>Make it stick: The science of successful learning</i>. Harvard University Press.</li>
+                        <li>Feynman, R. P. (1985). <i>Surely you're joking, Mr. Feynman!: Adventures of a curious character</i>. W. W. Norton & Company.</li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-slate-800 glass-panel mt-12 py-6">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-400 space-y-1">
+            <p><strong class="text-slate-300">AminoMed 360</strong> — Plataforma Educativa Médica Interactiva</p>
+            <p class="text-slate-500">Diseñado para la enseñanza moderna de Bioquímica por Beatriz Alejandra Treviño Talavera.</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // MASTER DATABASE OF ALL 20 AMINO ACIDS
+        const aminoAcids = [
+            { name: 'Glicina', code3: 'GLY', code1: 'G', group: 'no-polares', groupLabel: 'No Polar', nutCat: 'no-esencial', rGroup: '-H', tip: 'El más pequeño y flexible. Único aquiral.', effector: 'Neurotransmisor inhibidor; precursor del hemo' },
+            { name: 'Alanina', code3: 'ALA', code1: 'A', group: 'no-polares', groupLabel: 'No Polar', nutCat: 'no-esencial', rGroup: '-CH3', tip: 'Alifático simple. Ciclo alanina-glucosa.', effector: null },
+            { name: 'Valina', code3: 'VAL', code1: 'V', group: 'no-polares', groupLabel: 'No Polar', nutCat: 'esencial', rGroup: '-CH(CH3)2', tip: 'Cadena ramificada (BCAA). Mutada en drepanocitosis.', effector: null },
+            { name: 'Leucina', code3: 'LEU', code1: 'L', group: 'no-polares', groupLabel: 'No Polar', nutCat: 'esencial', rGroup: '-CH2-CH(CH3)2', tip: 'Ramificado (BCAA). Estimula mTOR.', effector: null },
+            { name: 'Isoleucina', code3: 'ILE', code1: 'I', group: 'no-polares', groupLabel: 'No Polar', nutCat: 'esencial', rGroup: 'Sec-butilo', tip: 'Ramificado (BCAA). Isómero con 2 centros quirales.', effector: null },
+            { name: 'Metionina', code3: 'MET', code1: 'M', group: 'no-polares', groupLabel: 'No Polar', nutCat: 'esencial', rGroup: '-CH2-CH2-S-CH3', tip: 'Iniciador AUG de la traducción.', effector: null },
+            { name: 'Prolina', code3: 'PRO', code1: 'P', group: 'no-polares', groupLabel: 'No Polar', nutCat: 'no-esencial', rGroup: 'Anillo Pirrolidina', tip: 'Iminoácido cíclico con rigidez estructural.', effector: null },
+            { name: 'Fenilalanina', code3: 'PHE', code1: 'F', group: 'no-polares', groupLabel: 'No Polar', nutCat: 'esencial', rGroup: 'Anillo Bencénico', tip: 'Aromático. Su déficit de degradación causa PKU.', effector: null },
+            { name: 'Triptófano', code3: 'TRP', code1: 'W', group: 'no-polares', groupLabel: 'No Polar', nutCat: 'esencial', rGroup: 'Anillo de Indol', tip: 'Aromático voluminoso. Precursor de serotonina.', effector: 'Precursor de serotonina y melatonina' },
+            { name: 'Serina', code3: 'SER', code1: 'S', group: 'polares-neutros', groupLabel: 'Polar Neutro', nutCat: 'no-esencial', rGroup: '-CH2-OH', tip: 'Grupo alcohol para fosforilación.', effector: null },
+            { name: 'Treonina', code3: 'THR', code1: 'T', group: 'polares-neutros', groupLabel: 'Polar Neutro', nutCat: 'esencial', rGroup: '-CH(OH)-CH3', tip: 'Alcohol secundario esencial.', effector: null },
+            { name: 'Cisteína', code3: 'CYS', code1: 'C', group: 'polares-neutros', groupLabel: 'Polar Neutro', nutCat: 'no-esencial', rGroup: '-CH2-SH', tip: 'Forma puentes disulfuro (cistina).', effector: null },
+            { name: 'Asparagina', code3: 'ASN', code1: 'N', group: 'polares-neutros', groupLabel: 'Polar Neutro', nutCat: 'no-esencial', rGroup: '-CH2-CO-NH2', tip: 'Amida del aspartato. Sitio N-glicosilación.', effector: null },
+            { name: 'Glutamina', code3: 'GLN', code1: 'Q', group: 'polares-neutros', groupLabel: 'Polar Neutro', nutCat: 'no-esencial', rGroup: '-CH2-CH2-CO-NH2', tip: 'Amida del glutamato. Transporte de amonio.', effector: null },
+            { name: 'Tirosina', code3: 'TYR', code1: 'Y', group: 'polares-neutros', groupLabel: 'Polar Neutro', nutCat: 'no-esencial', rGroup: 'Anillo Fenólico', tip: 'Precursor de catecolaminas y tiroxina.', effector: 'Precursor de dopamina, adrenalina, noradrenalina y tiroxina' },
+            { name: 'Aspartato', code3: 'ASP', code1: 'D', group: 'acidos', groupLabel: 'Ácido (-)', nutCat: 'no-esencial', rGroup: '-CH2-COO-', tip: 'Aniónico. Ciclo de la urea y lanzadera.', effector: 'Neurotransmisor excitador' },
+            { name: 'Glutamato', code3: 'GLU', code1: 'E', group: 'acidos', groupLabel: 'Ácido (-)', nutCat: 'no-esencial', rGroup: '-CH2-CH2-COO-', tip: 'Neurotransmisor excitador principal. En pos. 6 de HbA.', effector: 'Neurotransmisor excitador; precursor de GABA' },
+            { name: 'Lisina', code3: 'LYS', code1: 'K', group: 'basicos', groupLabel: 'Básico (+)', nutCat: 'esencial', rGroup: '-(CH2)4-NH3+', tip: 'Básico con amino terminal. Interacciona con ADN.', effector: null },
+            { name: 'Arginina', code3: 'ARG', code1: 'R', group: 'basicos', groupLabel: 'Básico (+)', nutCat: 'condicional', rGroup: 'Grupo Guanidino', tip: 'Básico fuerte. Precursor de óxido nítrico.', effector: 'Precursor de urea y óxido nítrico' },
+            { name: 'Histidina', code3: 'HIS', code1: 'H', group: 'basicos', groupLabel: 'Básico (+)', nutCat: 'condicional', rGroup: 'Anillo Imidazol', tip: 'Amortiguador de pH a nivel fisiológico.', effector: 'Precursor de la histamina' }
+        ];
+
+        // TAB SWITCHING SYSTEM
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.add('hidden'));
+            const targetPane = document.getElementById(tabId);
+            if (targetPane) targetPane.classList.remove('hidden');
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active-tab', 'bg-indigo-600', 'text-white');
+            });
+
+            const activeNav = document.getElementById('nav-' + tabId);
+            if (activeNav) activeNav.classList.add('active-tab');
+            const activeMob = document.getElementById('mob-' + tabId);
+            if (activeMob) activeMob.classList.add('active-tab');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // SECTION 1: HIGHLIGHT PART
+        function highlightPart(part) {
+            const titleEl = document.getElementById('part-title');
+            const descEl = document.getElementById('part-desc');
+            const boxEl = document.getElementById('part-info-box');
+
+            const info = {
+                calpha: {
+                    title: "Carbono Alfa (Cα) — El Centro Quiral",
+                    desc: "Es el átomo de carbono central al que se unen covalentemente los otros 4 grupos. Otorga estereoisomería L/D (todos los aminoácidos humanos son L-alfa)."
+                },
+                amino: {
+                    title: "Grupo Amino (-NH₃⁺) — Carácter Básico",
+                    desc: "A pH fisiológico 7.4 gana un protón quedando cargado positivamente (+1). Se une con el carboxilo de otro aminoácido formando el enlace peptídico."
+                },
+                carboxilo: {
+                    title: "Grupo Carboxilo (-COO⁻) — Carácter Ácido",
+                    desc: "A pH fisiológico dona su protón quedando cargado negativamente (-1). Otorga la capacidad de comportamiento anfótero (zwitterión)."
+                },
+                hidrogeno: {
+                    title: "Átomo de Hidrógeno (-H)",
+                    desc: "Satisface la cuarta valencia del Carbono Alfa. En la glicina hay dos hidrógenos, haciéndola la única molécula aquiral."
+                },
+                cadenaR: {
+                    title: "Cadena Lateral (Grupo R) — La Identidad Médica",
+                    desc: "Define las propiedades fisicoquímicas, polaridad, carga neta, plegamiento proteico y reactividad enzimática del aminoácido."
+                }
+            };
+
+            if (info[part]) {
+                titleEl.textContent = info[part].title;
+                descEl.textContent = info[part].desc;
+                boxEl.classList.add('ring-2', 'ring-indigo-500');
+                setTimeout(() => boxEl.classList.remove('ring-2', 'ring-indigo-500'), 500);
+            }
+        }
+
+        // SECTION 2: GROUPS SUBTAB
+        function switchGroup(groupId) {
+            document.querySelectorAll('.group-content').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById('group-' + groupId);
+            if (target) target.classList.remove('hidden');
+
+            document.querySelectorAll('.group-tab').forEach(btn => {
+                btn.classList.remove('bg-indigo-600', 'text-white', 'shadow');
+                btn.classList.add('text-slate-400');
+            });
+
+            const activeBtn = document.getElementById('subtab-' + groupId);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-indigo-600', 'text-white', 'shadow');
+                activeBtn.classList.remove('text-slate-400');
+            }
+        }
+
+        // SECTION 2: FILTRO RÁPIDO FISIOLÓGICO
+        function filterPhysio(group) {
+            document.querySelectorAll('.physio-btn').forEach(btn => {
+                btn.classList.remove('bg-indigo-600', 'text-white');
+                btn.classList.add('bg-slate-800', 'text-slate-300');
+            });
+            const activeBtn = document.getElementById('physio-btn-' + group);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-indigo-600', 'text-white');
+                activeBtn.classList.remove('bg-slate-800', 'text-slate-300');
+            }
+
+            const grid = document.getElementById('physio-grid');
+            grid.innerHTML = '';
+
+            const filtered = group === 'all' ? aminoAcids : aminoAcids.filter(a => a.group === group);
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'glass-card p-3 rounded-xl border border-slate-800 flex flex-col justify-between text-xs space-y-2';
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <strong class="text-white font-bold block">${item.name}</strong>
+                            <span class="text-[10px] text-purple-300 font-semibold">${item.groupLabel}</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="font-mono text-xs font-bold text-amber-400 bg-amber-950/80 px-1.5 py-0.5 rounded border border-amber-800">${item.code3}</span>
+                            <span class="font-mono text-xs font-black text-pink-300 block">${item.code1}</span>
+                        </div>
+                    </div>
+                    <div class="text-[11px] text-slate-300 bg-slate-900/60 p-2 rounded border border-slate-800">
+                        <span class="text-slate-400 block text-[10px]">Grupo R:</span> ${item.rGroup}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // SECTION 3: FILTRO RÁPIDO NUTRICIONAL
+        function filterNutritional(cat) {
+            document.querySelectorAll('.nut-btn').forEach(btn => {
+                btn.classList.remove('bg-indigo-600', 'text-white');
+                btn.classList.add('bg-slate-800', 'text-slate-300');
+            });
+            const activeBtn = document.getElementById('nut-btn-' + cat);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-indigo-600', 'text-white');
+                activeBtn.classList.remove('bg-slate-800', 'text-slate-300');
+            }
+
+            const grid = document.getElementById('nutritional-grid');
+            grid.innerHTML = '';
+
+            const filtered = cat === 'all' ? aminoAcids : aminoAcids.filter(a => a.nutCat === cat);
+
+            filtered.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'glass-card p-3 rounded-xl border border-slate-800 flex flex-col justify-between text-xs space-y-2';
+                
+                let badgeColor = item.nutCat === 'esencial' ? 'bg-rose-950 text-rose-300 border-rose-800' :
+                                 item.nutCat === 'condicional' ? 'bg-amber-950 text-amber-300 border-amber-800' :
+                                 'bg-emerald-950 text-emerald-300 border-emerald-800';
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <strong class="text-white font-bold block">${item.name}</strong>
+                            <span class="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded border ${badgeColor}">${item.nutCat}</span>
+                        </div>
+                        <span class="font-mono text-xs font-black text-pink-300">${item.code1} (${item.code3})</span>
+                    </div>
+                    <p class="text-[11px] text-slate-300 italic">${item.tip}</p>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // FLASHCARDS 3 LETRAS LOGIC
+        let flash3Index = 0;
+        let isFlipped3 = false;
+
+        function updateFlashcard3UI() {
+            const current = aminoAcids[flash3Index];
+            document.getElementById('flash-counter-3').textContent = `${flash3Index + 1} / ${aminoAcids.length}`;
+            document.getElementById('flash-name-3').textContent = current.name;
+            document.getElementById('flash-code3-val').textContent = current.code3;
+            document.getElementById('flash-tip-3').textContent = current.tip;
+
+            if (isFlipped3) {
+                document.getElementById('flash-card-inner-3').classList.remove('rotate-y-180');
+                isFlipped3 = false;
+            }
+        }
+
+        function flipCard3() {
+            const inner = document.getElementById('flash-card-inner-3');
+            isFlipped3 = !isFlipped3;
+            if (isFlipped3) {
+                inner.classList.add('rotate-y-180');
+            } else {
+                inner.classList.remove('rotate-y-180');
+            }
+        }
+
+        function nextFlashcard3() {
+            flash3Index = (flash3Index + 1) % aminoAcids.length;
+            updateFlashcard3UI();
+        }
+
+        function prevFlashcard3() {
+            flash3Index = (flash3Index - 1 + aminoAcids.length) % aminoAcids.length;
+            updateFlashcard3UI();
+        }
+
+        function randomFlashcard3() {
+            flash3Index = Math.floor(Math.random() * aminoAcids.length);
+            updateFlashcard3UI();
+        }
+
+        // FLASHCARDS 1 LETRA LOGIC
+        let flash1Index = 0;
+        let isFlipped1 = false;
+
+        function updateFlashcard1UI() {
+            const current = aminoAcids[flash1Index];
+            document.getElementById('flash-counter-1').textContent = `${flash1Index + 1} / ${aminoAcids.length}`;
+            document.getElementById('flash-name-1').textContent = current.name;
+            document.getElementById('flash-code1-val').textContent = current.code1;
+            document.getElementById('flash-tip-1').textContent = current.tip;
+
+            if (isFlipped1) {
+                document.getElementById('flash-card-inner-1').classList.remove('rotate-y-180');
+                isFlipped1 = false;
+            }
+        }
+
+        function flipCard1() {
+            const inner = document.getElementById('flash-card-inner-1');
+            isFlipped1 = !isFlipped1;
+            if (isFlipped1) {
+                inner.classList.add('rotate-y-180');
+            } else {
+                inner.classList.remove('rotate-y-180');
+            }
+        }
+
+        function nextFlashcard1() {
+            flash1Index = (flash1Index + 1) % aminoAcids.length;
+            updateFlashcard1UI();
+        }
+
+        function prevFlashcard1() {
+            flash1Index = (flash1Index - 1 + aminoAcids.length) % aminoAcids.length;
+            updateFlashcard1UI();
+        }
+
+        function randomFlashcard1() {
+            flash1Index = Math.floor(Math.random() * aminoAcids.length);
+            updateFlashcard1UI();
+        }
+
+        // CASO CLÍNICO: SIMULADOR DE MUTACIÓN Y PLEGAMIENTO PROTEICO (HbA vs HbS)
+        let isPeptideMutated = false;
+
+        function togglePeptideMutation() {
+            isPeptideMutated = !isPeptideMutated;
+            const toggleCircle = document.getElementById('toggle-circle');
+            const toggleBtn = document.getElementById('btn-peptide-toggle');
+            const labelHbA = document.getElementById('label-hba');
+            const labelHbS = document.getElementById('label-hbs');
+
+            const pos6Box = document.getElementById('pos6-box');
+            const pos6Code = document.getElementById('pos6-code');
+            const pos6Charge = document.getElementById('pos6-charge');
+
+            const card = document.getElementById('folding-impact-card');
+            const title = document.getElementById('folding-title');
+            const badge = document.getElementById('folding-badge');
+            const desc = document.getElementById('folding-desc');
+
+            const graphic1 = document.getElementById('protein-graphic-1');
+            const graphic2 = document.getElementById('protein-graphic-2');
+            const graphic3 = document.getElementById('protein-graphic-3');
+
+            const label1 = document.getElementById('protein-label-1');
+            const label2 = document.getElementById('protein-label-2');
+            const label3 = document.getElementById('protein-label-3');
+
+            if (isPeptideMutated) {
+                // STATE: MUTATED HbS (VALINE 6)
+                toggleCircle.style.transform = 'translateX(1.75rem)';
+                toggleBtn.className = 'relative inline-flex h-7 w-14 items-center rounded-full bg-amber-600 transition-colors focus:outline-none';
+                labelHbA.className = 'text-xs font-bold text-slate-500';
+                labelHbS.className = 'text-xs font-bold text-amber-400';
+
+                pos6Box.className = 'px-4 py-2 bg-amber-950/90 rounded-xl text-center border-2 border-amber-500 shrink-0 shadow-lg transition-all scale-105';
+                pos6Code.textContent = 'Val (Valina)';
+                pos6Code.className = 'font-mono font-black text-sm text-amber-300 block';
+                pos6Charge.textContent = 'Apolar / Hidrofóbico';
+                pos6Charge.className = 'text-[10px] text-amber-200 block font-semibold';
+
+                card.className = 'glass-card p-5 rounded-xl border-l-4 border-amber-500 bg-slate-900/80 space-y-3';
+                title.textContent = 'Estructura Proteica: Hemoglobina en Cadenas (Polímeros Insolubles)';
+                title.className = 'font-bold text-amber-300 text-sm font-heading';
+                badge.textContent = 'Fibras Poliméricas en Cadenas';
+                badge.className = 'text-xs font-semibold text-amber-300 bg-amber-950 px-2.5 py-1 rounded border border-amber-800';
+
+                desc.innerHTML = 'La <strong>Valina (Val)</strong> es no polar e hidrofóbica. En estado desoxigenado, expone un "parche pegajoso" hidrofóbico que encaja con otra molécula de HbS, agregándose linealmente y formando <strong>cadenas o tiras poliméricas rígidas</strong> que deforman la célula.';
+
+                // Graphics for chained fibers
+                graphic1.innerHTML = '🔗';
+                graphic1.className = 'w-20 h-20 mx-auto rounded-xl bg-amber-500/20 border-2 border-amber-400 flex items-center justify-center text-3xl shadow-lg transition-all duration-300';
+                label1.textContent = 'Parche Hidrofóbico';
+                label1.className = 'text-[11px] font-bold text-amber-300 block';
+
+                graphic2.innerHTML = `
+                    <div class="flex items-center gap-1">
+                        <div class="w-5 h-5 rounded bg-amber-500 border border-amber-300"></div>
+                        <div class="w-1 h-3 bg-amber-300"></div>
+                        <div class="w-5 h-5 rounded bg-amber-500 border border-amber-300"></div>
+                        <div class="w-1 h-3 bg-amber-300"></div>
+                        <div class="w-5 h-5 rounded bg-amber-500 border border-amber-300"></div>
+                    </div>
+                `;
+                graphic2.className = 'w-28 h-20 mx-auto rounded-2xl bg-amber-950/60 border border-amber-500/50 flex items-center justify-center p-2 transition-all duration-300';
+                label2.textContent = 'Polimerización en Cadenas';
+                label2.className = 'text-[11px] font-bold text-amber-300 block';
+
+                graphic3.textContent = 'Fibras Rígidas Insolubles';
+                graphic3.className = 'w-28 h-20 mx-auto rounded-xl bg-slate-900 border border-amber-500/50 flex items-center justify-center text-xs text-amber-300 p-2 font-bold text-center';
+                label3.textContent = 'Deformación en Hoz';
+                label3.className = 'text-[11px] font-bold text-amber-300 block';
+
+            } else {
+                // STATE: NORMAL HbA (GLUTAMATE 6)
+                toggleCircle.style.transform = 'translateX(0.25rem)';
+                toggleBtn.className = 'relative inline-flex h-7 w-14 items-center rounded-full bg-emerald-600 transition-colors focus:outline-none';
+                labelHbA.className = 'text-xs font-bold text-emerald-400';
+                labelHbS.className = 'text-xs font-bold text-slate-500';
+
+                pos6Box.className = 'px-4 py-2 bg-emerald-950/90 rounded-xl text-center border-2 border-emerald-500 shrink-0 shadow-lg transition-all scale-105';
+                pos6Code.textContent = 'Glu (Glutamato)';
+                pos6Code.className = 'font-mono font-black text-sm text-emerald-300 block';
+                pos6Charge.textContent = 'Carga Negativa (-)';
+                pos6Charge.className = 'text-[10px] text-emerald-200 block font-semibold';
+
+                card.className = 'glass-card p-5 rounded-xl border-l-4 border-emerald-500 bg-slate-900/80 space-y-3';
+                title.textContent = 'Estructura Proteica: Hemoglobina Redonda (Soluble)';
+                title.className = 'font-bold text-emerald-300 text-sm font-heading';
+                badge.textContent = 'Monómeros / Tetrámeros Libres';
+                badge.className = 'text-xs font-semibold text-emerald-300 bg-emerald-950 px-2.5 py-1 rounded border border-emerald-800';
+
+                desc.innerHTML = 'El <strong>Glutamato (Glu)</strong> es polar cargado negativamente. Permite que la hemoglobina adopte una forma redonda y globular independiente, totalmente soluble dentro del citoplasma eritrocitario.';
+
+                // Graphics for spherical/round hemoglobin
+                graphic1.innerHTML = '🔴';
+                graphic1.className = 'w-20 h-20 mx-auto rounded-full bg-emerald-500/20 border-2 border-emerald-400 flex items-center justify-center text-3xl shadow-lg transition-all duration-300';
+                label1.textContent = 'Hemoglobina Redonda';
+                label1.className = 'text-[11px] font-bold text-emerald-300 block';
+
+                graphic2.innerHTML = `
+                    <div class="w-6 h-6 rounded-full bg-rose-500/80 border border-rose-300"></div>
+                    <div class="w-6 h-6 rounded-full bg-rose-500/80 border border-rose-300"></div>
+                `;
+                graphic2.className = 'w-24 h-20 mx-auto rounded-2xl bg-emerald-950/40 border border-emerald-500/40 flex items-center justify-center gap-1.5 p-2 transition-all duration-300';
+                label2.textContent = 'Tetrámeros Solubles';
+                label2.className = 'text-[11px] font-bold text-emerald-300 block';
+
+                graphic3.textContent = 'Citoplasma Fluido';
+                graphic3.className = 'w-28 h-20 mx-auto rounded-xl bg-slate-900 border border-emerald-500/50 flex items-center justify-center text-xs text-emerald-300 p-2 font-bold';
+                label3.textContent = 'Sin Agregación';
+                label3.className = 'text-[11px] font-bold text-emerald-300 block';
+            }
+        }
+
+        // CASO CLÍNICO: SIMULADOR MORFOLÓGICO CELULAR Y SÍNTOMAS
+        function setHemoglobinState(type) {
+            const btnHbA = document.getElementById('btn-hba');
+            const btnHbS = document.getElementById('btn-hbs');
+            const rbcTitle = document.getElementById('rbc-title');
+            const rbcSubtitle = document.getElementById('rbc-subtitle');
+            const summaryTitle = document.getElementById('summary-title');
+            const summaryDesc = document.getElementById('summary-desc');
+            const statLifespan = document.getElementById('stat-lifespan');
+            const statOcclusion = document.getElementById('stat-occlusion');
+
+            const svgHbA = document.getElementById('svg-hba-group');
+            const svgHbS = document.getElementById('svg-hbs-group');
+            const symptomsPanel = document.getElementById('symptoms-panel');
+
+            if (type === 'hbs') {
+                btnHbS.className = 'px-4 py-2 rounded-xl text-xs font-bold transition bg-amber-600 text-white shadow';
+                btnHbA.className = 'px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-800 text-slate-400 hover:text-white';
+
+                svgHbA.classList.add('hidden');
+                svgHbS.classList.remove('hidden');
+
+                rbcTitle.textContent = 'Eritrocito Falciforme (Forma de Hoz)';
+                rbcSubtitle.textContent = 'Cadenas rígidas de HbS alteran el citoesqueleto';
+                rbcSubtitle.className = 'text-xs text-amber-400 font-semibold';
+
+                summaryTitle.textContent = 'Fisiopatología de la Vasoclusión:';
+                summaryDesc.innerHTML = 'Las tiras o cadenas insolubles de HbS rigidizan la membrana adoptando forma de hoz. Estas células no flexibles sufren hemólisis acelerada y atascamiento microvascular, bloqueando el paso de oxígeno a los tejidos.';
+
+                statLifespan.textContent = '10 - 20 días';
+                statLifespan.className = 'font-bold text-amber-400 text-sm';
+
+                statOcclusion.textContent = 'Muy Alto (Crisis Isquémicas)';
+                statOcclusion.className = 'font-bold text-rose-400 text-sm';
+
+                // Muestra el panel de síntomas de la Anemia Falciforme
+                symptomsPanel.classList.remove('hidden');
+
+            } else {
+                btnHbA.className = 'px-4 py-2 rounded-xl text-xs font-bold transition bg-emerald-600 text-white shadow';
+                btnHbS.className = 'px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-800 text-slate-400 hover:text-white';
+
+                svgHbS.classList.add('hidden');
+                svgHbA.classList.remove('hidden');
+
+                rbcTitle.textContent = 'Eritrocito Bicóncavo Flexible';
+                rbcSubtitle.textContent = 'Flujo libre en microcapilares (< 8 micras)';
+                rbcSubtitle.className = 'text-xs text-emerald-400 font-semibold';
+
+                summaryTitle.textContent = 'Fisiopatología Vascular:';
+                summaryDesc.innerHTML = 'Los glóbulos rojos normales son discos bicóncavos extraordinariamente deformables. Pueden comprimirse para pasar por capilares más estrechos que su propio diámetro sin romperse.';
+
+                statLifespan.textContent = '120 días';
+                statLifespan.className = 'font-bold text-emerald-400 text-sm';
+
+                statOcclusion.textContent = 'Mínimo / Nulo';
+                statOcclusion.className = 'font-bold text-emerald-400 text-sm';
+
+                // Oculta el panel de síntomas cuando se selecciona HbA
+                symptomsPanel.classList.add('hidden');
+            }
+        }
+
+        // FEYNMAN METHOD LOGIC
+        function loadFeynmanPrompt(type) {
+            const title = document.getElementById('feynman-prompt-title');
+            const checklist = document.getElementById('feynman-checklist');
+            
+            if (type === 'falciforme') {
+                title.textContent = 'Desafío: Explica la Anemia Falciforme a un Paciente';
+                checklist.innerHTML = `
+                    <h4 class="font-bold text-indigo-200">Lista de Cotejo Feynman:</h4>
+                    <ul class="space-y-1 text-slate-300">
+                        <li><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> ¿Mencionaste que el cambio de Glutamato por Valina modifica la polaridad?</li>
+                        <li><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> ¿Explicaste por qué se forman cadenas o tiras de hemoglobina rígidas?</li>
+                        <li><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> ¿Conectaste la forma de hoz con los taponamientos y los dolores intensos?</li>
+                    </ul>
+                `;
+            } else if (type === 'polares') {
+                title.textContent = 'Desafío: ¿Por qué los no polares huyen del agua citoplasmática?';
+                checklist.innerHTML = `
+                    <h4 class="font-bold text-indigo-200">Lista de Cotejo Feynman:</h4>
+                    <ul class="space-y-1 text-slate-300">
+                        <li><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> ¿Explicaste la ausencia de cargas parciales en los hidrocarburos?</li>
+                        <li><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> ¿Usaste una analogía sobre la mezcla de agua y aceite?</li>
+                        <li><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> ¿Relacionaste la hidrofobicidad con el plegamiento interno proteico?</li>
+                    </ul>
+                `;
+            } else if (type === 'efectoras') {
+                title.textContent = 'Desafío: Aminoácidos como Precursores de Moléculas Efectoras';
+                checklist.innerHTML = `
+                    <h4 class="font-bold text-indigo-200">Lista de Cotejo Feynman:</h4>
+                    <ul class="space-y-1 text-slate-300">
+                        <li><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> ¿Distinguiste la función estructural de la función como mensajeros?</li>
+                        <li><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> ¿Mencionaste precursores clave (ej. Tirosina ➔ Dopamina / Triptófano ➔ Serotonina)?</li>
+                        <li><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> ¿Explicaste el efecto en la fisiología del paciente de manera sencilla?</li>
+                    </ul>
+                `;
+            }
+        }
+
+        function updateWordCount() {
+            const text = document.getElementById('feynman-text').value.trim();
+            const count = text ? text.split(/\s+/).length : 0;
+            document.getElementById('word-count').textContent = `${count} palabras`;
+        }
+
+        function toggleFeynmanFeedback() {
+            const checklist = document.getElementById('feynman-checklist');
+            checklist.classList.toggle('hidden');
+        }
+
+        // INITIALIZATION ON PAGE LOAD
+        window.addEventListener('DOMContentLoaded', () => {
+            filterPhysio('all');
+            filterNutritional('all');
+            updateFlashcard3UI();
+            updateFlashcard1UI();
+        });
+    </script>
+</body>
+</html>
